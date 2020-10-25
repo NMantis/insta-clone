@@ -1,9 +1,39 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
+  <div class="companyImg limitWidth extraBottomPadding ion-padding">
+     WELCOME
+  </div>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
+  <div class="limitWidth extraBottomPadding">
+      <ion-text [innerHTML]="'login.info' | translate"></ion-text>
+  </div>
+
+  <form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
+
+      <ion-item class="limitWidth">
+          <ion-label position="fixed">Email</ion-label>
+          <ion-input type="email" inputmode="email" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item class="password">
+          <ion-label position="fixed">Password</ion-label>
+          <ion-input type="password" inputmode="password" formControlName="password">
+          </ion-input>
+      </ion-item>
+
+      <ion-item class="limitWidth extraBottomPadding">
+          <ion-label>Remember Me</ion-label>
+          <ion-checkbox slot="end" formControlName="autologin"></ion-checkbox>
+      </ion-item>
+
+
+      <div class="limitWidth">
+          <ion-button fill="solid" expand="block" size="large" shape="round" [disabled]="loginForm.invalid" type="submit">
+              <span>LOGIN</span>
+          </ion-button>
+      </div>
+
+  </form>
 </ion-content>

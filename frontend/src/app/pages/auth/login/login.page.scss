@@ -1,0 +1,32 @@
+ion-content {
+    display: flex;
+    .companyImg {
+        margin: 0.9em;
+        padding: 0.6em 0em;
+        ion-img {
+            margin: 0 auto;
+        }
+    }
+    .extraBottomPadding {
+        padding-bottom: 30px;
+    }
+
+    .logo-img {
+        max-width:600px;
+    }
+}
+
+.limitWidth {
+    max-width: 500px;
+    margin:auto !important;
+}
+
+.password {
+    max-width: 500px;
+    margin:auto;
+    margin-bottom: 20px;
+}
+
+.companySubtitle{
+    text-align: center;
+}
