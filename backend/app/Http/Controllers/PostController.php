@@ -6,7 +6,10 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Validator;
 Use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 Use Carbon\Carbon;
+
 class PostController extends Controller
 {
     /**
@@ -69,14 +72,23 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Returns all user posts but in UI its starts with the selected post
      *
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Request $request)
     {
+        $posts = Post::where(
+            'user_id', '=', auth()->user()->id
+            )->with(
+                'comments',
+                'likes'
+            )->paginate(10);
 
+        return response()->json([
+            "posts" => $posts
+        ]);
     }
 
     /**
@@ -86,9 +98,21 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'location' => 'string',
+            'description' => 'string'
+        ]);
+
+        $post = Post::findOrFail($request->id)->first();
+
+        $post->update([
+            'location' => $request->location,
+            'description' => $request->description
+        ]);
+
+        return ['message' => 'ok'];
     }
 
     /**
@@ -104,13 +128,17 @@ class PostController extends Controller
             ['id', '=', $request->id]
         ])->firstOrFail();
         
-      //  dd($post->image);
+        DB::beginTransaction();
+        try {
+            $post->delete();
 
-        if(Storage::exists($post->image)) {
-            Storage::delete($post->image);
+            Storage::disk('local')->delete($post->image);
+          
+        } catch (\Exception $th) {
+            DB::rollBack();
+            abort(500);
         }
-
-        $post->delete();
+        DB::commit();
 
         return response()->json(['message' => 'ok']);
     }
