@@ -25,18 +25,25 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'text' => 'required|string'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comment $comment)
-    {
-        //
+        if($validator->fails()){
+            return response()->json([
+                'error' => $validator->errors(),
+                'Validation Error'
+            ],422);
+        }
+
+        $comment = Comment::create([
+            'text' => $request->text,
+            'post_id' => $request->post_id
+        ]);
+
+        return response()->json([
+            "message" => "Comment successfully created."
+        ]);
     }
 
     /**
@@ -57,8 +64,12 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Request $request)
     {
-        //
+        $comment = Comment::where([
+            ['post_id', '=', $request->id],
+            ['id', '=', $request->id]
+        ])->firstOrFail();
+
     }
 }
