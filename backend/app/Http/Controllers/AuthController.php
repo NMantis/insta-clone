@@ -1,9 +1,9 @@
 <?php
  
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
  
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
  
 class AuthController extends Controller
@@ -20,9 +20,9 @@ class AuthController extends Controller
  
         $user = User::create($validatedData);
  
-        $accessToken = $user->createToken('authToken')->accessToken;
+        // $accessToken = $user->createToken('authToken')->accessToken;
  
-        return response([ 'user' => $user, 'access_token' => $accessToken]);
+        return response()->json(['user' => $user], 201);
     }
  
     public function login(Request $request)

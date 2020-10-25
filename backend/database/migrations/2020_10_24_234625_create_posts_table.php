@@ -17,9 +17,9 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('location');
-            $table->string('description');
-            $table->string('img_url');
+            $table->string('location')->nullable();
+            $table->string('description')->nullable();
+            $table->string('image');
             $table->timestamps();
         });
     }

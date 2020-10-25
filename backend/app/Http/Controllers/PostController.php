@@ -14,7 +14,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::paginate(10);
+
+        return response()->json([
+            "posts" => $posts
+        ]);
     }
 
     /**
@@ -24,20 +28,40 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $data = $request->all();
+    {       
+       // dd($request);
+        $user_id = auth()->user()->id;
+
 
         $validator = Validator::make($request->all(), [ 
-            // 'user_id' => 'required',
             'image' => 'required|mimes:png,jpg',
+            'description' => 'string',
+            'location' => 'string',
         ]); 
-
 
         if($validator->fails()){
             return response([
                 'error' => $validator->errors(), 
                 'Validation Error'
             ]);
+        }
+
+        if ($images = $request->file('image')) {
+            //store file into document folder
+            $images = $request->image->store('public');
+ 
+            //store your file into database
+            $post = Post::create([
+                'description' => $request->description,
+                'image' =>  $request->image,
+                'location' =>  $request->location,
+                'user_id' => $user_id
+            ]);
+              
+            return response()->json([
+                "message" => "Post successfully uploaded"
+            ]);
+  
         }
     }
 
@@ -49,7 +73,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        
     }
 
     /**
