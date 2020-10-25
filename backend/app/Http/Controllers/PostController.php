@@ -104,6 +104,12 @@ class PostController extends Controller
             ['id', '=', $request->id]
         ])->firstOrFail();
         
+      //  dd($post->image);
+
+        if(Storage::exists($post->image)) {
+            Storage::delete($post->image);
+        }
+
         $post->delete();
 
         return response()->json(['message' => 'ok']);
