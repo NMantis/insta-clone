@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -55,7 +56,18 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $request->validate([
+            'text' => 'required|string'
+        ]);
+
+        $comment = Comment::findOrFail($request->id)->first();
+
+        $comment->update([
+            'text' => $request->text
+        ]);
+
+        return ['message' => 'ok'];
+
     }
 
     /**
@@ -71,5 +83,8 @@ class CommentController extends Controller
             ['id', '=', $request->id]
         ])->firstOrFail();
 
+        $comment->delete();
+
+        return response()->json(['message' => 'ok']);
     }
 }

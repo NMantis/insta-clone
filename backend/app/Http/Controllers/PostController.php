@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Validator;
 Use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 Use Carbon\Carbon;
 
 class PostController extends Controller

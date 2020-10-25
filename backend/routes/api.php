@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,19 @@ use App\Http\Controllers\PostController;
 |
 */
 
+// POSTS
 Route::get('/posts/{id}', [PostController::class, 'show'])->middleware('auth:api');
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth:api');
 Route::put('/posts/{id}', [PostController::class, 'update'])->middleware('auth:api');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('auth:api');
 
+// COMMENTS
+
+Route::get('/posts/{id}/comments', [CommentController::class, 'index'])->middleware('auth:api');
+Route::post('/posts/comments', [CommentController::class, 'store'])->middleware('auth:api');
+Route::put('/posts/{id}/comments/{id}', [CommentController::class, 'update'])->middleware('auth:api');
+Route::delete('/posts/{id}/comments/{id}', [CommentController::class, 'destroy'])->middleware('auth:api');
+
+// AUTH
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
