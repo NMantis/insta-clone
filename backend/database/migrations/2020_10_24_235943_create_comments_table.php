@@ -20,6 +20,8 @@ class CreateCommentsTable extends Migration
             $table->foreignId('post_id');
             $table->foreign('post_id')->references('id')->on('posts');
             $table->string('text');
+            $table->foreignId('like_id');
+            $table->foreign('like_id')->references('id')->on('likes');
             $table->timestamps();
         });
     }
