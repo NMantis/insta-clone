@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Validator;
+Use Illuminate\Support\Facades\Storage;
+Use Carbon\Carbon;
 class PostController extends Controller
 {
     /**
@@ -28,41 +30,45 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {       
-       // dd($request);
-        $user_id = auth()->user()->id;
+    {
 
 
-        $validator = Validator::make($request->all(), [ 
-            'image' => 'required|mimes:png,jpg',
+        $validator = Validator::make($request->all(), [
+            'image' => 'string',
             'description' => 'string',
             'location' => 'string',
-        ]); 
-
+        ]);
         if($validator->fails()){
-            return response([
-                'error' => $validator->errors(), 
+            return response()->json([
+                'error' => $validator->errors(),
                 'Validation Error'
-            ]);
+            ],422);
         }
 
-        if ($images = $request->file('image')) {
-            //store file into document folder
-            $images = $request->image->store('public');
- 
-            //store your file into database
-            $post = Post::create([
-                'description' => $request->description,
-                'image' =>  $request->image,
-                'location' =>  $request->location,
-                'user_id' => $user_id
-            ]);
-              
+        if (!preg_match('/^data:image\/(\w+);base64,/', $request->image)) {
             return response()->json([
-                "message" => "Post successfully uploaded"
-            ]);
-  
+                'error' => "Wrong media format",
+                'Validation Error'
+            ],422);
         }
+
+        $imageFile = substr( $request->image, strpos($request->image, ',') + 1);
+        $imageFile = base64_decode($imageFile);
+        $fileName = Carbon::now()->timestamp.".png";
+        Storage::disk('local')->put("public/".$fileName, $imageFile);
+
+        $post = Post::create([
+            'description' => $request->description ?? null,
+            'image' =>  Storage::url($fileName),// storage/1603633617.png
+            'location' =>  $request->location ?? null,
+            'user_id' => auth()->user()->id
+        ]);
+
+        return response()->json([
+            "message" => "Post successfully uploaded"
+        ]);
+
+
     }
 
     /**
