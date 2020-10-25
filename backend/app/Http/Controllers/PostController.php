@@ -31,8 +31,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validator = Validator::make($request->all(), [
             'image' => 'string',
             'description' => 'string',
@@ -68,7 +66,6 @@ class PostController extends Controller
             "message" => "Post successfully uploaded"
         ]);
 
-
     }
 
     /**
@@ -100,8 +97,15 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Request $request)
     {
-        //
+        $post = Post::where([
+            ['user_id', '=', auth()->user()->id],
+            ['id', '=', $request->id]
+        ])->firstOrFail();
+        
+        $post->delete();
+
+        return response()->json(['message' => 'ok']);
     }
 }

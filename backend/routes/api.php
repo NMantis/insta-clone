@@ -15,8 +15,9 @@ use App\Http\Controllers\PostController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth:api');
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('auth:api');
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
