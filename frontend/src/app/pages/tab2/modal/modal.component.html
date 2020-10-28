@@ -1,3 +1,62 @@
-<p>
-  modal works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar color="tertiary">
+    <ion-title>New Post</ion-title>
+
+    <ion-buttons slot="secondary">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-img [src]="image"></ion-img>
+
+  <ion-list lines="full" [formGroup]="form">
+    <ion-item>
+      <ion-input placeholder="Title" formControlName="title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="Description" formControlName="description"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Also Post To</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>
+        Facebook
+      </ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        Twiiter
+      </ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>
+        Tumblr
+      </ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer no-padding no-border class="ion-align-center">
+
+  <ion-button color="primary" expand="block" shape="round" fill="outline" (click)="submit()" [disabled]="form.invalid">
+    SAVE
+  </ion-button>
+
+</ion-footer>

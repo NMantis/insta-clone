@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -7,11 +8,22 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent implements OnInit {
-  @Input() imgUrl: any;
+  @Input() image: any;
+  form: FormGroup;
   constructor(public modal: ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = new FormGroup({
+      image: new FormControl(this.image),
+      title: new FormControl(''),
+      description: new FormControl('')
+    })
+  }
 
+
+  submit() {
+    this.modal.dismiss(this.form.value);
+  }
 
   dismiss() {
     this.modal.dismiss();

@@ -1,8 +1,10 @@
 import { ModalComponent } from './modal/modal.component';
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { PostService } from 'src/app/services/post.service';
+import { filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -14,37 +16,49 @@ export class Tab2Page {
   constructor(
     public photoService: PhotoService,
     public modal: ModalController,
-    private postService: PostService
-    ) { }
+    private postService: PostService,
+    private router: Router,
+    private toastCtrl: ToastController
+  ) { }
 
-  createPost() {
-    // GET PHOTO 
-    const image = this.photoService.addNewToGallery();
-
-    // OPEN MODAL FOR DESCRIPTION / LOCATION 
-    this.presentModal(image)
-    // POST 
-
-    // REDIRECT TO HOME
-
+  ionViewWillEnter() {
+    this.photoService.openCam()
+    .pipe(filter(img => !!img?.base64String))
+    .subscribe(img => {
+      const image = `data:image/${img.format};base64,${img.base64String}`
+      this.presentModal(image)
+    }, error => {
+      if(error?.includes('cancelled'))
+        this.router.navigateByUrl('/tabs/tab1')
+    })
   }
 
   async presentModal(image) {
     const modal = await this.modal.create({
       component: ModalComponent,
+      backdropDismiss: false,
       componentProps: {
-        imgUrl: image.webviewPath
+        image: image
       }
     });
 
     await modal.present();
 
     await modal.onDidDismiss().then(resp => {
-      if(resp)
-      console.log(resp)
-        // this.postService.store(resp.data).subscribe()
+      if (resp?.data)
+        this.postService.store(resp.data).subscribe(() => {
+          this.router.navigateByUrl('/tabs/tab1')
+        })
+      else 
+        this.router.navigateByUrl('/tabs/tab1')
     })
   }
-  
 
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'New Post created!',
+      duration: 2000
+    });
+    toast.present();
+  }
 }

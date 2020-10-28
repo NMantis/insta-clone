@@ -5,6 +5,7 @@ import {
   Plugins, CameraResultType, Capacitor, FilesystemDirectory,
   CameraPhoto, CameraSource
 } from '@capacitor/core';
+import { from } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const { Camera, Filesystem, Storage } = Plugins;
@@ -17,6 +18,17 @@ export class PhotoService {
   public photos: Photo[] = [];
   baseUrl = environment.baseUrl
   constructor(private http: HttpClient) { }
+
+
+  openCam() {
+    return from(Camera.getPhoto({
+      resultType: CameraResultType.Base64,
+      //  source: CameraSource.Camera,
+        saveToGallery: true,
+        quality: 100,
+        presentationStyle: 'fullscreen'
+    }));
+  }
 
   public async addNewToGallery() {
     // Take a photo
