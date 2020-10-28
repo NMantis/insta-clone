@@ -31,7 +31,7 @@ class UserFactory extends Factory
         // ];
 
         return [
-            'name' => Str::random(10),
+            'name' => $this->faker->name,
             'email' => 'user1@gmail.com',
             'password' => bcrypt('password'),
             'email_verified_at' => now()

@@ -36,7 +36,7 @@ class PostController extends Controller
         $validator = Validator::make($request->all(), [
             'image' => 'string',
             'description' => 'string',
-            'location' => 'string',
+            'title' => 'string',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -60,7 +60,7 @@ class PostController extends Controller
         $post = Post::create([
             'description' => $request->description ?? null,
             'image' =>  Storage::url($fileName),// storage/1603633617.png
-            'location' =>  $request->location ?? null,
+            'title' =>  $request->title ?? null,
             'user_id' => auth()->user()->id
         ]);
 
@@ -100,14 +100,14 @@ class PostController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'location' => 'string',
+            'title' => 'string',
             'description' => 'string'
         ]);
 
         $post = Post::findOrFail($request->id)->first();
 
         $post->update([
-            'location' => $request->location,
+            'title' => $request->title,
             'description' => $request->description
         ]);
 
