@@ -32,7 +32,7 @@ class UserFactory extends Factory
 
         return [
             'name' => $this->faker->name,
-            'email' => 'user1@gmail.com',
+            'email' =>  $this->faker->unique()->safeEmail,
             'password' => bcrypt('password'),
             'email_verified_at' => now()
         ];
