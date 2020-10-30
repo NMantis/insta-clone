@@ -10,6 +10,6 @@ export class ProfileResolver implements Resolve<any> {
     constructor(protected postService: PostService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | any {
-        return this.postService.profile();
+       // return this.postService.profile();
     }
 }

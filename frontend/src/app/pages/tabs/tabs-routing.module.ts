@@ -19,7 +19,7 @@ const routes: Routes = [
       {
         path: 'profile',
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule),
-        resolve: { posts: ProfileResolver }
+    //    resolve: { posts: ProfileResolver }
       },
       {
         path: '',

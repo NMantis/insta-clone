@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Filters } from '../models/Filters.model';
 import { Paginated } from '../models/Paginated.model';
@@ -17,10 +18,12 @@ export class PostService {
         return this.http.get<Paginated<any>>(`${this.baseUrl}/api/posts`, { params })
     }
 
-    profile(): Observable<Paginated<any>> {
-        return this.http.get<Paginated<any>>(`${this.baseUrl}/api/posts/profile`)
+    profile(filters: Filters): Observable<Paginated<any>> {
+        const params = filters.toParams();
+        return this.http.get<{ posts: Paginated<any> }>(`${this.baseUrl}/api/posts/profile`, { params })
+            .pipe(map(resp => resp.posts))
     }
-    
+
     store(post: any): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}/api/posts`, post)
     }
