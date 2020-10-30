@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { auditTime, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Filters } from 'src/app/models/Filters.model';
@@ -23,19 +23,11 @@ export class Tab3Page {
   filters$: BehaviorSubject<Filters>;
   baseUrl = environment.baseUrl;
   private destroyed$ = new Subject<boolean>();
-  public profile_segment: string;
 
-  // You can get this data from your API. This is a dumb data for being an example.
-  public images = [
-    {
-      id: 1,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://scontent-cdg2-1.cdninstagram.com/t51.2885-15/e35/13473123_1544898359150795_654626889_n.jpg'
-    }
-  ];
-
-  constructor(private postService: PostService) { }
+  constructor(
+    private postService: PostService,
+    public modal: ModalController
+    ) { }
 
   // Define segment for everytime when profile page is active
   ionViewWillEnter() {
@@ -44,7 +36,6 @@ export class Tab3Page {
       this.infiniteScroll.disabled = false
     }
 
-    this.profile_segment = 'grid';
     // this.route.data
     //   .pipe(takeUntil(this.destroyed$))
     //   .subscribe(({ posts }) => console.log(posts))

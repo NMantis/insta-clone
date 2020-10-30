@@ -10,7 +10,7 @@
 
 <ion-content class="ion-padding">
 
-  <ion-row class="ion-padding">
+  <ion-row class="ion-no-padding">
     <!-- Avatar -->
     <ion-col size="3">
       <ion-avatar>
@@ -19,20 +19,20 @@
     </ion-col>
     <!-- Information about user -->
     <ion-col size="2" offset="1">
-      <ion-label>
-        <h2>21</h2>
+      <ion-label class="ion-text-center">
+        <h2>{{ posts.length }}</h2>
         <h5>posts</h5>
       </ion-label>
     </ion-col>
     <ion-col size="3">
-      <ion-label>
+      <ion-label class="ion-text-center">
         <h2>114</h2>
         <h5>followers</h5>
       </ion-label>
 
     </ion-col>
     <ion-col size="3">
-      <ion-label>
+      <ion-label class="ion-text-center">
         <h2>119</h2>
         <h5>following</h5>
       </ion-label>
@@ -44,7 +44,7 @@
       <ion-label position="floating">
         <b>Can Delibas</b>
       </ion-label>
-      <p>Software developer, open-source lover, invoker spammer & heavy metal guitarist</p>
+      <p style="font-size: 14px">Software developer, open-source lover, invoker spammer & heavy metal guitarist</p>
     </ion-item>
   <!-- Edit/follow button -->
   <ion-row no-padding no-margin>
@@ -71,9 +71,8 @@
     </ion-segment>
   </div>
 
-  <!-- Segment content -->
-  <div [ngSwitch]="profile_segment">
-    <ion-list *ngSwitchCase="'grid'">
+
+    <ion-list>
       <ion-grid *ngIf="posts.length"  class="ion-no-padding">
         <ion-row  class="ion-no-padding">
           <ion-col size="4" *ngFor="let post of posts"  class="ion-no-padding">
@@ -83,11 +82,9 @@
       </ion-grid>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'list'">
-      
-
-    </ion-list>
-  </div>
+    <div *ngIf="! posts.length">
+      No posts to show
+    </div>
   
   <ion-infinite-scroll (ionInfinite)="load()">
     <ion-infinite-scroll-content loadingText="Loading Posts.."></ion-infinite-scroll-content>

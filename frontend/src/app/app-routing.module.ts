@@ -20,7 +20,11 @@ const routes: Routes = [
   {
     path: 'register',
     redirectTo: '/auth/register'
+  },  {
+    path: 'user-posts',
+    loadChildren: () => import('./pages/user-posts/user-posts.module').then( m => m.UserPostsPageModule)
   }
+
 ];
 @NgModule({
   imports: [
