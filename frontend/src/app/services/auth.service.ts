@@ -35,7 +35,7 @@ export class AuthService {
 
   logout(): void {
     this.token.next(null);
-    this.router.navigate(['/', 'login'])
+    this.router.navigate(['/', 'auth', 'login'])
   }
 
   status(): Observable<boolean> {

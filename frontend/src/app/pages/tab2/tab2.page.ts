@@ -29,7 +29,7 @@ export class Tab2Page {
       this.presentModal(image)
     }, error => {
       if(error?.includes('cancelled'))
-        this.router.navigateByUrl('/tabs/tab1')
+        this.router.navigateByUrl('/home')
     })
   }
 
@@ -47,10 +47,10 @@ export class Tab2Page {
     await modal.onDidDismiss().then(resp => {
       if (resp?.data)
         this.postService.store(resp.data).subscribe(() => {
-          this.router.navigateByUrl('/tabs/tab1')
+          this.router.navigateByUrl('/home')
         })
       else 
-        this.router.navigateByUrl('/tabs/tab1')
+        this.router.navigateByUrl('/home')
     })
   }
 
