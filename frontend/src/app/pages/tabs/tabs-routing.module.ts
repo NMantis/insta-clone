@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProfileResolver } from 'src/app/resolvers/profile.resolver';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
       },
       {
         path: 'profile',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule),
+        resolve: { posts: ProfileResolver }
       },
       {
         path: '',

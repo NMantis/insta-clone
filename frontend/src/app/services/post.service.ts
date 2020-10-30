@@ -16,6 +16,10 @@ export class PostService {
         const params = filters.toParams();
         return this.http.get<Paginated<any>>(`${this.baseUrl}/api/posts`, { params })
     }
+
+    profile(): Observable<Paginated<any>> {
+        return this.http.get<Paginated<any>>(`${this.baseUrl}/api/posts/profile`)
+    }
     
     store(post: any): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}/api/posts`, post)

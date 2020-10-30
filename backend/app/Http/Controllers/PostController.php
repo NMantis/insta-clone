@@ -82,7 +82,24 @@ class PostController extends Controller
             'user_id', '=', auth()->user()->id
             )->with(
                 'comments',
-                'likes'
+                'postlikes'
+            )->paginate(10);
+
+        return response()->json([
+            "posts" => $posts
+        ]);
+    }
+
+    
+    /**
+     * Returns all user posts in the profile
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function profile(Request $request)
+    {
+        $posts = Post::where(
+            'user_id', '=', auth()->user()->id
             )->paginate(10);
 
         return response()->json([
