@@ -15,7 +15,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        Comment::where('post_id', '=', $request->post_id) 
+                    ->with('commentLikes')
+                    ->get();
     }
 
     /**
@@ -39,7 +41,8 @@ class CommentController extends Controller
 
         $comment = Comment::create([
             'text' => $request->text,
-            'post_id' => $request->post_id
+            'post_id' => $request->post_id,
+            'user_id' => auth()->user()->id
         ]);
 
         return response()->json([
@@ -60,13 +63,13 @@ class CommentController extends Controller
             'text' => 'required|string'
         ]);
 
-        $comment = Comment::findOrFail($request->id)->first();
+        $comment = Comment::findOrFail($request->comment_id)->first();
 
         $comment->update([
             'text' => $request->text
         ]);
 
-        return ['message' => 'ok'];
+        return response()->json(['message' => 'ok']);
 
     }
 
@@ -79,8 +82,8 @@ class CommentController extends Controller
     public function destroy(Request $request)
     {
         $comment = Comment::where([
-            ['post_id', '=', $request->id],
-            ['id', '=', $request->id]
+            ['post_id', '=', $request->post_id],
+            ['id', '=', $request->comment_id]
         ])->firstOrFail();
 
         $comment->delete();

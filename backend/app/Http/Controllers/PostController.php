@@ -82,7 +82,7 @@ class PostController extends Controller
             'user_id', '=', auth()->user()->id
             )->with(
                 'comments',
-                'postlikes'
+                'postLikes'
             )->paginate(10);
 
         return response()->json([

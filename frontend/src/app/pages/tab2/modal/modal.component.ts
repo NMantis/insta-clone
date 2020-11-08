@@ -20,7 +20,6 @@ export class ModalComponent implements OnInit {
     })
   }
 
-
   submit() {
     this.modal.dismiss(this.form.value);
   }

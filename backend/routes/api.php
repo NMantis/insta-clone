@@ -26,10 +26,10 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('au
 
 // COMMENTS
 
-Route::get('/posts/{id}/comments', [CommentController::class, 'index'])->middleware('auth:api');
+Route::get('/posts/{post_id}/comments', [CommentController::class, 'index'])->middleware('auth:api');
 Route::post('/posts/comments', [CommentController::class, 'store'])->middleware('auth:api');
-Route::put('/posts/{id}/comments/{id}', [CommentController::class, 'update'])->middleware('auth:api');
-Route::delete('/posts/{id}/comments/{id}', [CommentController::class, 'destroy'])->middleware('auth:api');
+Route::put('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'update'])->middleware('auth:api');
+Route::delete('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'destroy'])->middleware('auth:api');
 
 // AUTH
 Route::post('/register', [AuthController::class, 'register']);
