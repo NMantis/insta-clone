@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { PostService } from 'src/app/services/post.service';
-import { filter } from 'rxjs/operators';
+import { filter, finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +19,7 @@ export class Tab2Page {
     private postService: PostService,
     private router: Router,
     private toastCtrl: ToastController,
-    public loadingController: LoadingController
+    public loaderCtrl: LoadingController
   ) { }
 
   ionViewWillEnter() {
@@ -46,23 +46,31 @@ export class Tab2Page {
     await modal.present();
 
     await modal.onDidDismiss().then(resp => {
-      if (resp?.data)
+      if (resp?.data){
+        const loader = this.presentLoading();
         this.postService.store(resp.data)
+        .pipe(finalize(() => this.dismissLoader(loader)))
         .subscribe(() => {
           this.router.navigateByUrl('/home')
         })
+      }
       else 
         this.router.navigateByUrl('/home')
     })
   }
 
   async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-      duration: 2000
+    const loader = await this.loaderCtrl.create({
+      message: 'Creating Post..',
+      spinner: 'bubbles'
     });
-    await loading.present();
+
+    await (await loader).present();
+    return loader;
+  }
+
+  dismissLoader(loading) {
+    loading.then(load => load.dismiss())
   }
 
   async presentToast() {
