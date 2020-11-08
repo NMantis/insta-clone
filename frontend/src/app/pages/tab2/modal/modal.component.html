@@ -13,14 +13,16 @@
 <ion-content [fullscreen]="true">
   <ion-img [src]="image"></ion-img>
 
-  <ion-list lines="full" [formGroup]="form">
-    <ion-item>
-      <ion-input placeholder="Title" formControlName="title"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-textarea placeholder="Description" formControlName="description"></ion-textarea>
-    </ion-item>
+  <ion-list lines="full" >
+    <form [formGroup]="form">
+      <ion-item>
+        <ion-input formControlName="title" placeholder="Title"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-textarea placeholder="Description" formControlName="description"></ion-textarea>
+      </ion-item>
+    </form>
   </ion-list>
 
   <ion-list>

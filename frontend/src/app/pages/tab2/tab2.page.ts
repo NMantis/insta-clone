@@ -1,6 +1,6 @@
 import { ModalComponent } from './modal/modal.component';
 import { Component } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { PostService } from 'src/app/services/post.service';
 import { filter } from 'rxjs/operators';
@@ -18,7 +18,8 @@ export class Tab2Page {
     public modal: ModalController,
     private postService: PostService,
     private router: Router,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    public loadingController: LoadingController
   ) { }
 
   ionViewWillEnter() {
@@ -46,12 +47,22 @@ export class Tab2Page {
 
     await modal.onDidDismiss().then(resp => {
       if (resp?.data)
-        this.postService.store(resp.data).subscribe(() => {
+        this.postService.store(resp.data)
+        .subscribe(() => {
           this.router.navigateByUrl('/home')
         })
       else 
         this.router.navigateByUrl('/home')
     })
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
   }
 
   async presentToast() {

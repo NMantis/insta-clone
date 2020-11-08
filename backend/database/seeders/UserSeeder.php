@@ -20,7 +20,13 @@ class UserSeeder extends Seeder
                 'email' => 'user1@gmail.com',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now()
-            ]
+            ],
+            [
+                'name' => 'name2',
+                'email' => 'user2@gmail.com',
+                'password' => bcrypt('password'),
+                'email_verified_at' => now()
+            ],
         ]);
     }
 }

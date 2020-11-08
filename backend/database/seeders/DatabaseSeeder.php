@@ -18,22 +18,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UserSeeder::class
+            UserSeeder::class,
+            PostSeeder::class,
+            CommentSeeder::class,
+            PostLikeSeeder::class,
+            CommentLikeSeeder::class
         ]);
 
-        User::factory()
-            ->has(
-                Post::factory()
-                    ->count(2)
-                    ->has(
-                        Comment::factory()
-                                ->count(2)
-                                ->has(CommentLike::factory())
-                        )
-                    ->has(PostLike::factory())
-                )
-            ->count(5)
-            ->create();
     }
 
     // lila24@example.com

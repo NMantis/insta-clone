@@ -20,6 +20,36 @@ class PostSeeder extends Seeder
                 'title' => 'this is title',
                 'description' => 'this is description',
                 'image' => '/storage/1603643656.png'
+            ],
+            [
+                'user_id' => '1',
+                'title' => 'post 2',
+                'description' => 'this is description',
+                'image' => '/storage/1603643656.png'
+            ],
+            [
+                'user_id' => '1',
+                'title' => 'post 3',
+                'description' => 'this is description',
+                'image' => '/storage/1603643656.png'
+            ],
+            [
+                'user_id' => '1',
+                'title' => 'post 4',
+                'description' => 'this is description',
+                'image' => '/storage/1603643656.png'
+            ],
+            [
+                'user_id' => '1',
+                'title' => 'post 5',
+                'description' => 'this is description',
+                'image' => '/storage/1603643656.png'
+            ],
+            [
+                'user_id' => '1',
+                'title' => 'post 6',
+                'description' => 'this is description',
+                'image' => '/storage/1603643656.png'
             ]
         ]);
     }
