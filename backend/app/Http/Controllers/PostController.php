@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -18,7 +18,16 @@ class PostController extends Controller
      */
     public function index()
     {
+        $user = auth()->user()->id;
+
         $builder = Post::query()
+            ->whereIn(
+                'user_id',
+                DB::table('follows')
+                    ->select('following_id')
+                    ->where('follower_id', $user)
+            )
+            ->orWhere('user_id', $user)
             ->with([
                 'user',
                 'postLikes',

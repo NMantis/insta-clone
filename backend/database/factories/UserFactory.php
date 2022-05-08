@@ -36,4 +36,25 @@ class UserFactory extends Factory
             'email_verified_at' => now()
         ];
     }
+
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            $users = User::all();
+
+            for($i = 0; $i < rand(5, 40); $i++) {
+                $random = $users->random()->id;
+
+                if($random != $user->id)
+                    $user->following()->attach($users->random()->id);
+            }
+
+            $user->save();
+        });
+    }
 }

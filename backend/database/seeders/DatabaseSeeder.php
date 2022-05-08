@@ -35,6 +35,9 @@ class DatabaseSeeder extends Seeder
                     ->hasPostLikes(3, fn () => ['user_id' => User::all()->random()->id])
             )
             ->create();
+            // ->afterCreating(User::class, function ($user) {
+            //     $user->followers()->save(['follower_id' => User::all()->random()->id]);
+            // });
 
     }
 
