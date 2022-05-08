@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Filters } from '../models/Filters.model';
-import { Paginated } from '../models/Paginated.model';
+import { Filters } from '../models/Filters';
+import { Paginated } from '../models/Paginated';
 
 @Injectable({
     providedIn: 'root'

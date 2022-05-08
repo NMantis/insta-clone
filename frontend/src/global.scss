@@ -24,3 +24,15 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.main-action-sheet .action-sheet-group {
+    
+    button span {
+        justify-content: center!important;  
+    }
+
+    .unfollow-button, .report-button {
+        color: var(--ion-color-primary);
+        font-weight: 600;
+    }
+  }

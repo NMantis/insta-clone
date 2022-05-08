@@ -8,4 +8,4 @@ import { PostComponent } from './post.component';
   declarations: [PostComponent],
   exports: [PostComponent]
 })
-export class Tab1PageModule {}
+export class PostModule {}

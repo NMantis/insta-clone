@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Post } from 'src/app/models/Post';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +9,10 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  post: Post = new Post();
+
+  constructor() {
+    
+  }
 
 }

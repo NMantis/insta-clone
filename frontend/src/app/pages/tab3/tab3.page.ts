@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { auditTime, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { Filters } from 'src/app/models/Filters.model';
-import { Paginated } from 'src/app/models/Paginated.model';
+import { Filters } from 'src/app/models/Filters';
+import { Paginated } from 'src/app/models/Paginated';
 import { PostService } from 'src/app/services/post.service';
 import { environment } from 'src/environments/environment';
 
@@ -22,6 +22,7 @@ export class Tab3Page {
   shadowText = [];
   filters$: BehaviorSubject<Filters>;
   baseUrl = environment.baseUrl;
+  profile_segment: string = 'grid';
   private destroyed$ = new Subject<boolean>();
 
   constructor(
