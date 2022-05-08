@@ -38,6 +38,7 @@ class PostController extends Controller
             'description' => 'string',
             'title' => 'string',
         ]);
+
         if($validator->fails()){
             return response()->json([
                 'error' => $validator->errors(),
@@ -90,7 +91,7 @@ class PostController extends Controller
         ]);
     }
 
-    
+
     /**
      * Returns all user posts in the profile
      * @param  \App\Models\Post  $post
@@ -143,13 +144,13 @@ class PostController extends Controller
             ['user_id', '=', auth()->user()->id],
             ['id', '=', $request->id]
         ])->firstOrFail();
-        
+
         DB::beginTransaction();
         try {
             $post->delete();
 
             Storage::disk('local')->delete($post->image);
-          
+
         } catch (\Exception $th) {
             DB::rollBack();
             abort(500);
