@@ -1,40 +1,46 @@
 <ion-header>
-    <div class="companyImg limitWidth extraBottomPadding ion-padding">
-        WELCOME
-    </div>
+    <ion-toolbar mode="ios" color="tertiary">
+
+        <ion-buttons slot="secondary">
+            <ion-button>
+                <ion-icon slot="icon-only" name="logo-instagram"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
 
-    <div class="limitWidth extraBottomPadding">
-        <ion-text> Login </ion-text>
-    </div>
+    <form (ngSubmit)="login()" [formGroup]="loginForm">
+        <div class="input-group">
+            <ion-item>
+                <ion-note slot="start">
+                    <ion-icon name="person-outline"></ion-icon>
+                </ion-note>
 
-    <form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
-
-        <ion-item class="limitWidth">
-            <ion-label position="fixed">Email</ion-label>
-            <ion-input type="email" inputmode="email" formControlName="email"></ion-input>
-        </ion-item>
-
-        <ion-item class="password">
-            <ion-label position="fixed">Password</ion-label>
-            <ion-input type="password" inputmode="password" formControlName="password">
-            </ion-input>
-        </ion-item>
-
-        <ion-item class="limitWidth extraBottomPadding">
-            <ion-label>Remember Me</ion-label>
-            <ion-checkbox slot="end" formControlName="autologin"></ion-checkbox>
-        </ion-item>
-
-
-        <div class="limitWidth">
-            <ion-button fill="solid" expand="block" size="large" shape="round" [disabled]="loginForm.invalid"
-                type="submit">
-                <span>LOGIN</span>
-            </ion-button>
+                <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+            </ion-item>
+            <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+                <span *ngIf="email.errors?.required">Email is required</span>
+                <span *ngIf="email.errors?.email">Email is invalid</span>
+            </div>
+            <ion-item>
+                <ion-note slot="start">
+                    <ion-icon name="key-outline"></ion-icon>
+                </ion-note>
+                <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+            </ion-item>
+            <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+                <span *ngIf="password.errors?.required">Password is required</span>
+                <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
+            </div>
         </div>
+
+        <ion-button type="submit" expand="block" [disabled]="loginForm.invalid">LOGIN</ion-button>
+        <ion-button type="button" expand="block" color="light" fill="clear" routerLink="/register">Not yet a member? Sign up!
+        </ion-button>
+
 
     </form>
 </ion-content>

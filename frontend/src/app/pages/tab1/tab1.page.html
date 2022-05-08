@@ -10,7 +10,7 @@
 
 <ion-content [fullscreen]="true" scrollEvents="true" [appHideHeader]="header">
   <!-- this is where the posts will be -->
-  <ion-card class="single-post-home" *ngIf="post">
+  <ion-card class="single-post-home" *ngFor="let post of posts">
     <ion-item>
       <ion-avatar slot="start">
         <img [src]="post?.user?.image">

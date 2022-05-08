@@ -1,18 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
+import { Filters } from 'src/app/models/Filters';
 import { Post } from 'src/app/models/Post';
-import { User } from 'src/app/models/User';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
 
-  post: Post = new Post();
+  posts: Post[] = [];
+  constructor(
+    private postService: PostService,
+    private route: ActivatedRoute
+  ) { }
 
-  constructor() {
-    
+
+  ngOnInit(): void {
+    this.route.data
+      .pipe(first())
+      .subscribe(({ posts }) => this.posts = posts.data);
   }
 
 }

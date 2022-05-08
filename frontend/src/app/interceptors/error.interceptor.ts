@@ -36,13 +36,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                             } else {
                                 text = "Παρουσιάστηκε σφάλμα κατά την πιστοποίηση του χρήστη σας. Βεβαιωθείτε οτι είστε συνδεδεμένοι στο διαδίκτυο και κάντε ξανά είσοδο στο σύστημα."
                                 this.presentToast(text)
-                                this.router.navigate(['/auth/login'])
+                                // this.router.navigate(['/auth/login'])
                             }
                             break;
                         case 403:
                             text = "Δεν έχετε δικαιώματα να πραγματοποιήσετε αυτήν την ενέργεια."
                             this.presentToast(text)
-                            this.router.navigate(['/auth/login'])
+                            // this.router.navigate(['/auth/login'])
                             break;
                         case 422:
                             text = "Παρουσιάστηκε σφάλμα κατά την αποστολή των δεδομένων."

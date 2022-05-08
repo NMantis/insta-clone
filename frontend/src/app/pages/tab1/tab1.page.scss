@@ -19,6 +19,7 @@
 
     ion-card-content {
         padding-top: 0;
+        padding-bottom: 24px;
     }
     
     .action-row {
@@ -49,10 +50,14 @@
 
     .desc-row {
         display:flex;
-        max-width: 100%;
+        max-width: 95%;
         overflow:hidden;
         white-space: nowrap;
-        text-overflow: ellipsis;
+
+        span {
+            overflow:hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     ion-content {

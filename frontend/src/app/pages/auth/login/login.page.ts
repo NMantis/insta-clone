@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
     this.loginForm = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
       password: new FormControl("", [Validators.required]),
-      autologin: new FormControl(false, [Validators.required])
+      autologin: new FormControl(false)
     });
   }
 
@@ -31,4 +31,11 @@ export class LoginPage implements OnInit {
       .subscribe(resp => this.router.navigateByUrl(''))
   }
 
+  get email(): FormControl {
+    return this.loginForm.get('email') as FormControl;
+  }
+
+  get password(): FormControl {
+    return this.loginForm.get('password') as FormControl;
+  }
 }

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Validator;
-Use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-Use Carbon\Carbon;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
@@ -18,11 +18,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(10);
+        $builder = Post::query()
+            ->with([
+                'user',
+                'postLikes',
+                'comments'
+            ]);
 
-        return response()->json([
-            "posts" => $posts
-        ]);
+        return $builder->paginate(10);
     }
 
     /**
@@ -39,28 +42,28 @@ class PostController extends Controller
             'title' => 'string',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'error' => $validator->errors(),
                 'Validation Error'
-            ],422);
+            ], 422);
         }
 
         if (!preg_match('/^data:image\/(\w+);base64,/', $request->image)) {
             return response()->json([
                 'error' => "Wrong media format",
                 'Validation Error'
-            ],422);
+            ], 422);
         }
 
-        $imageFile = substr( $request->image, strpos($request->image, ',') + 1);
+        $imageFile = substr($request->image, strpos($request->image, ',') + 1);
         $imageFile = base64_decode($imageFile);
-        $fileName = Carbon::now()->timestamp.".png";
-        Storage::disk('local')->put("public/".$fileName, $imageFile);
+        $fileName = Carbon::now()->timestamp . ".png";
+        Storage::disk('local')->put("public/" . $fileName, $imageFile);
 
         $post = Post::create([
             'description' => $request->description ?? null,
-            'image' =>  Storage::url($fileName),// storage/1603633617.png
+            'image' =>  Storage::url($fileName), // storage/1603633617.png
             'title' =>  $request->title ?? null,
             'user_id' => auth()->user()->id
         ]);
@@ -68,7 +71,6 @@ class PostController extends Controller
         return response()->json([
             "message" => "Post successfully uploaded"
         ]);
-
     }
 
     /**
@@ -80,11 +82,13 @@ class PostController extends Controller
     public function show(Request $request)
     {
         $posts = Post::where(
-            'user_id', '=', auth()->user()->id
-            )->with(
-                'comments',
-                'postLikes'
-            )->paginate(10);
+            'user_id',
+            '=',
+            auth()->user()->id
+        )->with(
+            'comments',
+            'postLikes'
+        )->paginate(10);
 
         return response()->json([
             "posts" => $posts
@@ -100,8 +104,10 @@ class PostController extends Controller
     public function profile(Request $request)
     {
         $posts = Post::where(
-            'user_id', '=', auth()->user()->id
-            )->paginate(10);
+            'user_id',
+            '=',
+            auth()->user()->id
+        )->paginate(10);
 
         return response()->json([
             "posts" => $posts
@@ -150,7 +156,6 @@ class PostController extends Controller
             $post->delete();
 
             Storage::disk('local')->delete($post->image);
-
         } catch (\Exception $th) {
             DB::rollBack();
             abort(500);
