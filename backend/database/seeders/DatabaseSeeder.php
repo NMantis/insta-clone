@@ -17,13 +17,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $this->call([
             UserSeeder::class,
-            PostSeeder::class,
-            CommentSeeder::class,
-            PostLikeSeeder::class,
-            CommentLikeSeeder::class
+            // PostSeeder::class,
+            // CommentSeeder::class,
+            // PostLikeSeeder::class,
+            // CommentLikeSeeder::class
         ]);
+
+        User::factory()
+            ->count(40)
+            ->has(
+                Post::factory()
+                    ->count(3)
+                    ->hasComments(1, fn () => ['user_id' => User::all()->random()->id])
+                    ->hasPostLikes(3, fn () => ['user_id' => User::all()->random()->id])
+            )
+            ->create();
 
     }
 

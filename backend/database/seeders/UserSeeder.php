@@ -14,19 +14,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+
         User::insert([
             [
-                'name' => 'name',
-                'email' => 'user1@gmail.com',
+                'name' => 'Nikos',
+                'email' => 'user1@example.com',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now()
-            ],
-            [
-                'name' => 'name2',
-                'email' => 'user2@gmail.com',
-                'password' => bcrypt('password'),
-                'email_verified_at' => now()
-            ],
+            ]
         ]);
+
     }
 }

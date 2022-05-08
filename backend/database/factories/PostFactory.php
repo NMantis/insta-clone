@@ -26,7 +26,8 @@ class PostFactory extends Factory
                 'user_id' =>  User::factory(),
                 'title' => $this->faker->text,
                 'description' => $this->faker->text,
-                'image' => '/storage/1603643656.png'
+                'image' => '/storage/1603643656.png',
+                'created_at' => now()
         ];
     }
 }
