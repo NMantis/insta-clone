@@ -45,16 +45,33 @@ class UserFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (User $user) {
-            $users = User::all();
 
-            for($i = 0; $i < rand(5, 40); $i++) {
-                $random = $users->random()->id;
+            $userIds = User::whereNot('id', $user->id)
+                ->inRandomOrder()
+                ->limit(30)
+                ->get()
+                ->pluck('id');
 
-                if($random != $user->id)
-                    $user->following()->attach($users->random()->id);
-            }
+            $user->following()->attach($userIds);
 
-            $user->save();
+
+            // $users = User::all();
+
+            // $randomIds = $users->random(rand(5, 40))->id;
+
+            // foreach ($randomIds as $id) {
+            //     if ($id != $user->id)
+            //         $user->following()->attach($users->random(rand(5, 40))->id);
+            // }
+
+            // $user->save();
         });
     }
 }
+
+            // for ($i = 0; $i < rand(5, 40); $i++) {
+            //     // $random = $users->random()->id;
+
+            //     if ($random != $user->id)
+            //         $user->following()->attach($users->random()->id);
+            // }

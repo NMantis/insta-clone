@@ -16,7 +16,7 @@ export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let new_request: HttpRequest<any>;
 
-        const jwt: string = this.auth.token.value;
+        const jwt: string = this.auth.token$.value;
 
         if (jwt == null) {
             new_request = request.clone();

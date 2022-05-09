@@ -20,20 +20,20 @@
     <!-- Information about user -->
     <ion-col size="2" offset="1">
       <ion-label class="ion-text-center">
-        <h2>{{ posts.length }}</h2>
+        <h2>{{ profileData?.posts }}</h2>
         <h5>posts</h5>
       </ion-label>
     </ion-col>
     <ion-col size="3">
       <ion-label class="ion-text-center">
-        <h2>114</h2>
+        <h2>{{ profileData?.followers }}</h2>
         <h5>followers</h5>
       </ion-label>
 
     </ion-col>
     <ion-col size="3">
       <ion-label class="ion-text-center">
-        <h2>119</h2>
+        <h2>{{ profileData?.following }}</h2>
         <h5>following</h5>
       </ion-label>
     </ion-col>
@@ -42,7 +42,7 @@
     <!-- Profile info -->
     <ion-item lines="none">
       <ion-label position="floating">
-        <b>Can Delibas</b>
+        <b>{{ profileData?.user.name }}</b>
       </ion-label>
       <p style="font-size: 14px">Software developer, open-source lover, invoker spammer & heavy metal guitarist</p>
     </ion-item>

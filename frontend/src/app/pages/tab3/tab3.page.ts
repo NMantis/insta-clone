@@ -2,9 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { auditTime, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { auditTime, finalize, first, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Filters } from 'src/app/models/Filters';
 import { Paginated } from 'src/app/models/Paginated';
+import { ProfileData } from 'src/app/models/ProfileData';
 import { PostService } from 'src/app/services/post.service';
 import { environment } from 'src/environments/environment';
 
@@ -23,11 +24,13 @@ export class Tab3Page {
   filters$: BehaviorSubject<Filters>;
   baseUrl = environment.baseUrl;
   profile_segment: string = 'grid';
+  profileData: ProfileData;
   private destroyed$ = new Subject<boolean>();
 
   constructor(
     private postService: PostService,
-    public modal: ModalController
+    private modal: ModalController,
+    private route: ActivatedRoute
     ) { }
 
   // Define segment for everytime when profile page is active
@@ -37,9 +40,9 @@ export class Tab3Page {
       this.infiniteScroll.disabled = false
     }
 
-    // this.route.data
-    //   .pipe(takeUntil(this.destroyed$))
-    //   .subscribe(({ posts }) => console.log(posts))
+    this.route.data
+      .pipe(first())
+      .subscribe(({ data }) => this.profileData = data);
 
       this.filters$.pipe(
         tap(() => this.loading = true),

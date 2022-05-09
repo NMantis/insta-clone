@@ -4,14 +4,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   baseUrl = environment.baseUrl
-  public token = new BehaviorSubject<string>(null);
- // public user = new BehaviorSubject<User>(null);
+  public token$ = new BehaviorSubject<string>(null);
+  public user$ = new BehaviorSubject<User>(null);
 
   constructor(
     private router: Router,
@@ -19,27 +20,37 @@ export class AuthService {
   ) {
     const saved_token = localStorage.getItem('token');
     if (saved_token) {
-        this.token.next(saved_token);
+      this.token$.next(saved_token);
     }
 
-    this.token.subscribe(token => localStorage.setItem('token', token) );
+    this.token$.subscribe(token => localStorage.setItem('token', token));
   }
 
-  login(email: string, password: string): Observable<{ user: any, access_token: string }> {
+  login(email: string, password: string): Observable<{ user: User, access_token: string }> {
     return this.http
       .post<{ user, access_token }>(`${this.baseUrl}/api/login`, { email, password })
       .pipe(
-        tap(resp => this.token.next(resp.access_token))
+        tap(resp => this.token$.next(resp.access_token)),
+        tap(resp => this.setUser(resp.user))
       );
   }
 
   logout(): void {
-    this.token.next(null);
+    this.token$.next(null);
     this.router.navigate(['/', 'auth', 'login'])
   }
 
+  setUser(user: User) {
+    const usr = new User(user);
+    this.user$.next(usr);
+  }
+
+  get user(): User {
+    return this.user$.value;
+  }
+
   status(): Observable<boolean> {
-    return this.token.pipe(map(token => token != null && token != 'null'));
+    return this.token$.pipe(map(token => token != null && token != 'null'));
   }
 
 }

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CurrentUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +37,9 @@ Route::delete('/posts/{post_id}/comments/{comment_id}', [CommentController::clas
 // AUTH
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// PROFILE
+Route::get('/profile/{user}', ProfileController::class)->middleware('auth:api');
+
+// CURRENT USER
+Route::get('/current', CurrentUserController::class)->middleware('auth:api');
