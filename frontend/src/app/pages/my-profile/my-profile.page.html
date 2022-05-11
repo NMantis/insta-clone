@@ -12,10 +12,9 @@
 
   <div class="header">
 
+    <!-- AVATAR -->
     <div class="avatar-wrapper">
-
       <img src="http://i.stack.imgur.com/Dj7eP.jpg">
-
     </div>
 
     <div class="info-col">
@@ -80,12 +79,11 @@
     </ion-segment>
   </div>
 
-
   <ion-list>
     <ion-grid *ngIf="posts.length" class="ion-no-padding">
       <ion-row class="ion-no-padding">
         <ion-col size="4" *ngFor="let post of posts" class="ion-no-padding">
-          <img [src]="baseUrl + '/public' + post.image" alt="">
+          <img [src]="baseUrl + post.image" alt="">
         </ion-col>
       </ion-row>
     </ion-grid>
