@@ -58,7 +58,7 @@
   </div>
 
   <!-- Profile info -->
-  <ion-item lines="none" style="max-width: 52%">
+  <ion-item lines="none" style="max-width: 300px">
     <ion-label position="floating">
       <b>{{ profileData?.user.name }}</b>
     </ion-label>
@@ -85,7 +85,7 @@
     <ion-grid *ngIf="posts.length" class="ion-no-padding">
       <ion-row class="ion-no-padding">
         <ion-col size="4" *ngFor="let post of posts" class="ion-no-padding">
-          <img [src]="baseUrl + post.image" alt="">
+          <img [src]="baseUrl + '/public' + post.image" alt="">
         </ion-col>
       </ion-row>
     </ion-grid>
