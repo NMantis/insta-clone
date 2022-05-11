@@ -4,6 +4,10 @@ export class User {
     email: string = 'markjoe@example.com';
     password?: string;
     image?: string;
+    username: string;
+    bio: string;
+    website: string;
+    
 
     constructor(data?: User) {
         Object.assign(this, data);

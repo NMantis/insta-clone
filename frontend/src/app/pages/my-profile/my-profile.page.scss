@@ -1,3 +1,48 @@
 ion-label h2 {
-    font-weight: bold!important;
+  font-weight: bold !important;
+}
+
+.header {
+  margin: 12px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  justify-content: space-between;
+
+  .avatar-wrapper {
+    width: 150px;
+    height: 150px;
+    margin: 0 22px 12px 0;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+
+    .wrapper img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .info-col {
+    flex: 2;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+
+    .info {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .actions{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+  }
 }

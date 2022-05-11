@@ -47,7 +47,7 @@ class PostController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'image' => 'string',
-            'description' => 'string',
+            'description' => 'nullable|string',
             'title' => 'string',
         ]);
 
