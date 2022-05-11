@@ -55,6 +55,12 @@ export class HomePage {
     this.filters$.next(filters);
   }
 
+  refresh() {
+    const filters = new Filters({ page: 1 });
+    this.posts = [];
+    this.filters$.next(filters);
+  }
+
   /* instead of OnDestroy */
   ionViewDidLeave() {
     this.filters$.complete();

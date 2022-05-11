@@ -24,7 +24,7 @@
         <!-- <ion-icon name="heart" color="primary"></ion-icon> -->
       </ion-button>
 
-      <ion-button slot="icon-only" fill="clear" shape="round">
+      <ion-button slot="icon-only" fill="clear" shape="round" (click)="showModal()">
         <ion-icon name="chatbubble-outline"></ion-icon>
       </ion-button>
 
@@ -39,7 +39,7 @@
       <span class="description">{{ post.description }}</span>
     </div>
 
-    <div class="show-comments" *ngIf="post.comments.length">
+    <div class="show-comments" *ngIf="post.comments.length" (click)="showModal()">
       <ion-text color="medium">
         View all {{ post.comments.length }} comments
       </ion-text>

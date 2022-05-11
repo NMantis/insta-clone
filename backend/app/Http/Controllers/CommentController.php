@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
@@ -13,11 +13,17 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        Comment::where('post_id', '=', $request->post_id) 
-                    ->with('commentLikes')
-                    ->get();
+        $comments = Comment::where('post_id', '=', $request->post_id)
+            ->with(
+                'commentLikes',
+                'user'
+            )
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return response()->json($comments);
     }
 
     /**
@@ -32,17 +38,17 @@ class CommentController extends Controller
             'text' => 'required|string'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'error' => $validator->errors(),
                 'Validation Error'
-            ],422);
+            ], 422);
         }
 
-        $comment = Comment::create([
+        Comment::create([
             'text' => $request->text,
             'post_id' => $request->post_id,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->id()
         ]);
 
         return response()->json([
@@ -70,7 +76,6 @@ class CommentController extends Controller
         ]);
 
         return response()->json(['message' => 'ok']);
-
     }
 
     /**

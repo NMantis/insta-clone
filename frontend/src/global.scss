@@ -33,6 +33,11 @@
     height: 100vh;
 }
 
+.comment-modal {
+    --height: 100vh;
+    --max-height: 900px;
+}
+
 .main-action-sheet .action-sheet-group {
     
     button span {
