@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { auditTime, finalize, first, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { first, tap, auditTime, takeUntil, switchMap, finalize } from 'rxjs/operators';
 import { Filters } from 'src/app/models/Filters';
 import { Paginated } from 'src/app/models/Paginated';
 import { ProfileData } from 'src/app/models/ProfileData';
@@ -10,11 +10,11 @@ import { PostService } from 'src/app/services/post.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-tab3',
-  templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  selector: 'app-my-profile',
+  templateUrl: './my-profile.page.html',
+  styleUrls: ['./my-profile.page.scss'],
 })
-export class Tab3Page {
+export class MyProfilePage {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   posts: any[] = [];
@@ -31,7 +31,7 @@ export class Tab3Page {
     private postService: PostService,
     private modal: ModalController,
     private route: ActivatedRoute
-    ) { }
+  ) { }
 
   // Define segment for everytime when profile page is active
   ionViewWillEnter() {
@@ -44,14 +44,14 @@ export class Tab3Page {
       .pipe(first())
       .subscribe(({ data }) => this.profileData = data);
 
-      this.filters$.pipe(
-        tap(() => this.loading = true),
-        auditTime(400),
-        takeUntil(this.destroyed$),
-        switchMap(filters =>
-          this.postService.profile(filters)
-            .pipe(finalize(() => this.loading = false)))
-      ).subscribe(resp => this.loadPosts(resp));
+    this.filters$.pipe(
+      tap(() => this.loading = true),
+      auditTime(400),
+      takeUntil(this.destroyed$),
+      switchMap(filters =>
+        this.postService.profile(filters)
+          .pipe(finalize(() => this.loading = false)))
+    ).subscribe(resp => this.loadPosts(resp));
   }
 
   loadPosts(response: Paginated<any>) {
@@ -70,7 +70,7 @@ export class Tab3Page {
   }
 
   load() {
-    if(! this.posts.length) return ;
+    if (!this.posts.length) return;
 
     const filters = this.filters$.value
     filters.page++

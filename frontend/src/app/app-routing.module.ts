@@ -23,6 +23,18 @@ const routes: Routes = [
   },  {
     path: 'user-posts',
     loadChildren: () => import('./pages/user-posts/user-posts.module').then( m => m.UserPostsPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'my-profile',
+    loadChildren: () => import('./pages/my-profile/my-profile.module').then( m => m.MyProfilePageModule)
+  },
+  {
+    path: 'create-post',
+    loadChildren: () => import('./pages/create-post/create-post.module').then( m => m.CreatePostPageModule)
   }
 
 ];

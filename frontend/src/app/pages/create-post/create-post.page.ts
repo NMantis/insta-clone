@@ -1,17 +1,17 @@
-import { ModalComponent } from './modal/modal.component';
 import { Component } from '@angular/core';
-import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { ModalController, ToastController, LoadingController } from '@ionic/angular';
+import { filter, finalize } from 'rxjs/operators';
 import { PhotoService } from 'src/app/services/photo.service';
 import { PostService } from 'src/app/services/post.service';
-import { filter, finalize } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { ModalComponent } from './modal/modal.component';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-create-post',
+  templateUrl: './create-post.page.html',
+  styleUrls: ['./create-post.page.scss'],
 })
-export class Tab2Page {
+export class CreatePostPage {
 
   constructor(
     public photoService: PhotoService,

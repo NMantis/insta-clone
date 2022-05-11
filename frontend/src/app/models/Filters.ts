@@ -2,10 +2,10 @@ import { HttpParams } from '@angular/common/http';
 
 export class Filters {
     page: number = 1;
-   // perPage: number = 50;
+   perPage: number = 50;
     query?: string;
    // status?: string;
-   // sort?: string =  'created_at,desc';
+   sort?: string =  'created_at,desc';
 
     constructor(data?: Partial<Filters>) {
         Object.assign(this, data)
