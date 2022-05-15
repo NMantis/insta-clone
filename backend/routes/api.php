@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\CurrentUserController;
 
 /*
@@ -24,6 +25,8 @@ Route::get('/posts', [PostController::class, 'index'])->middleware('auth:api');
 Route::get('/posts/{id}', [PostController::class, 'show'])->middleware('auth:api');
 Route::get('/posts/profile', [PostController::class, 'profile'])->middleware('auth:api');
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth:api');
+Route::post('/posts/{post}/like', [PostLikeController::class, 'store'])->middleware('auth:api');
+Route::delete('/posts/{post}/unlike', [PostLikeController::class, 'destroy'])->middleware('auth:api');
 Route::put('/posts/{id}', [PostController::class, 'update'])->middleware('auth:api');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('auth:api');
 
