@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+    protected $appends = ['liked_by_auth_user'];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
@@ -24,4 +27,23 @@ class Post extends Model
         return $this->hasMany('App\Models\PostLike');
     }
 
+    public function getLikedByAuthUserAttribute()
+    {
+
+        $like = $this->postLikes->firstWhere('user_id', auth()->user()->id);
+
+        $isLiked = $like ? true : false;
+
+        return $isLiked;
+    }
+
+    public function scopeFull($builder)
+    {
+        return $builder
+            ->with([
+                'user',
+                'postLikes',
+                'comments'
+            ]);
+    }
 }

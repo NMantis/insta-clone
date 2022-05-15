@@ -52,7 +52,7 @@ class UserFactory extends Factory
                 ->get()
                 ->pluck('id');
 
-            $user->following()->attach($userIds);
+            $user->following()->syncWithoutDetaching($userIds);
 
 
             // $users = User::all();
@@ -68,10 +68,3 @@ class UserFactory extends Factory
         });
     }
 }
-
-            // for ($i = 0; $i < rand(5, 40); $i++) {
-            //     // $random = $users->random()->id;
-
-            //     if ($random != $user->id)
-            //         $user->following()->attach($users->random()->id);
-            // }

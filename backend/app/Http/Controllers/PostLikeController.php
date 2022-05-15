@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PostLike;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostLikeController extends Controller
@@ -19,23 +20,35 @@ class PostLikeController extends Controller
 
         PostLike::create([
             'user_id' =>  auth()->user()->id,
-            'post_id' => $request->post_id,
+            'post_id' => $request->post,
         ]);
 
+        $post = Post::find($request->post)
+            ->full()
+            ->first();
+
         return response()->json([
-            "message" => "Success"
+            "message" => "Success",
+            "data" => $post
         ]);
     }
 
     public function destroy(Request $request)
     {
-        $postLike = PostLike::where([
-            ['post_id', '=', $request->post_id],
-            ['user_id', '=', auth()->user()->id]
-        ])->firstOrFail();
+        $postLike = PostLike::where('post_id', $request->post)
+            ->where('user_id', auth()->user()->id)
+            ->firstOrFail();
 
         $postLike->delete();
 
-        return response()->json(['message' => 'ok']);
+        $post = Post::find($request->post)
+            ->full()
+            ->first();
+
+
+        return response()->json([
+            'message' => 'ok',
+            "data" => $post
+        ]);
     }
 }

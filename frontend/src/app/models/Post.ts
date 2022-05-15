@@ -12,6 +12,7 @@ export class Post {
     user?: User = new User();
     post_likes: any[];
     created_at: Date | string;
+    liked_by_auth_user: boolean;
 
     constructor(data?: Post) {
         Object.assign(this, data);

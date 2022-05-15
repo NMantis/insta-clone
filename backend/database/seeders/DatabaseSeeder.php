@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\Models\PostLike;
 use App\Models\CommentLike;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -32,14 +33,22 @@ class DatabaseSeeder extends Seeder
                 Post::factory()
                     ->count(3)
                     ->hasComments(1, fn () => ['user_id' => User::all()->random()->id])
-                    ->hasPostLikes(3, fn () => ['user_id' => User::all()->random()->id])
+                    ->hasPostLikes(3, function (array $attributes, $post) {
+
+
+                        $likedBy = PostLike::where('post_id', $post->id)->pluck('user_id');
+
+                        $users = User::whereNotIn('id', $likedBy)
+                            ->inRandomOrder()
+                            ->limit(30)
+                            ->get()
+                            ->pluck('id');
+
+                        return ['user_id' => $users->random()];
+                    })
             )
             ->create();
-            // ->afterCreating(User::class, function ($user) {
-            //     $user->followers()->save(['follower_id' => User::all()->random()->id]);
-            // });
 
     }
 
-    // lila24@example.com
 }
