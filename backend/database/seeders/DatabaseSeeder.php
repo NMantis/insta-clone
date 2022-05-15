@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        $this->call([
-            UserSeeder::class,
-            // PostSeeder::class,
-            // CommentSeeder::class,
-            // PostLikeSeeder::class,
-            // CommentLikeSeeder::class
-        ]);
+        // $this->call([
+        // UserSeeder::class,
+        // PostSeeder::class,
+        // CommentSeeder::class,
+        // PostLikeSeeder::class,
+        // CommentLikeSeeder::class
+        // ]);
 
         User::factory()
             ->count(40)
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
                 Post::factory()
                     ->count(3)
                     ->hasComments(1, fn () => ['user_id' => User::all()->random()->id])
-                    ->hasPostLikes(3, function (array $attributes, $post) {
+                    ->hasPostLikes(rand(0, 23), function (array $attributes, $post) {
 
 
                         $likedBy = PostLike::where('post_id', $post->id)->pluck('user_id');
@@ -49,6 +49,6 @@ class DatabaseSeeder extends Seeder
             )
             ->create();
 
+        User::find(1)->update(['email' => 'user1@example.com']);
     }
-
 }

@@ -5,7 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
@@ -20,7 +20,8 @@ const routes: Routes = [
   {
     path: 'register',
     redirectTo: '/auth/register'
-  },  {
+  },
+  {
     path: 'user-posts',
     loadChildren: () => import('./pages/user-posts/user-posts.module').then( m => m.UserPostsPageModule)
   },
