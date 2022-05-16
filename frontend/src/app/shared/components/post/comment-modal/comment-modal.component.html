@@ -25,7 +25,7 @@
       </ion-avatar>
 
       <ion-label>
-        <h2 class="username">{{ post.user.name }}</h2>
+        <h2 class="username">{{ post.user.username }}</h2>
         <p class="comment-text">{{ post.description }}</p>
         <p>{{ post.created_at | date: 'h:mm MMMM d, y' }}</p>
       </ion-label>
@@ -41,7 +41,7 @@
         </ion-avatar>
 
         <ion-label>
-          <h2 class="username">{{ comment.user.name }}</h2>
+          <h2 class="username">{{ comment.user.username }}</h2>
 
           <p class="comment-text">{{ comment.text }}</p>
           <p>{{ comment.created_at | date: 'H:mm MMMM d, y' }}</p>
