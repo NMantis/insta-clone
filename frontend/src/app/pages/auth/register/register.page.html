@@ -1,12 +1,85 @@
 <div class="main-wrapper">
   <ion-header>
-
-    <ion-toolbar>
-      <ion-title>register</ion-title>
+    <ion-toolbar mode="ios" color="tertiary">
+      <ion-buttons slot="secondary">
+        <ion-button>
+          <ion-icon slot="icon-only" name="logo-instagram"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
+    <form (ngSubmit)="register()" [formGroup]="form">
+      <div class="input-group">
+        <!-- USERNAME -->
+        <ion-item>
+          <ion-note slot="start">
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-note>
 
+          <ion-input placeholder="Username" formControlName="username"></ion-input>
+        </ion-item>
+
+        <div *ngIf="(username.dirty || username.touched) && username.errors" class="errors">
+          <span *ngIf="username.errors?.required">Username is required</span>
+        </div>
+        <!-- FULL NAME -->
+        <ion-item>
+          <ion-note slot="start" style="margin-inline-start: 24px"></ion-note>
+
+          <ion-input placeholder="Full Name" formControlName="name"></ion-input>
+        </ion-item>
+
+        <div *ngIf="(name.dirty || name.touched) && name.errors" class="errors">
+          <span *ngIf="name.errors?.required">Full Name is required</span>
+        </div>
+        <!-- EMAIL -->
+        <ion-item>
+          <ion-note slot="start">
+            <ion-icon name="mail-outline"></ion-icon>
+          </ion-note>
+
+          <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+        </ion-item>
+
+        <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+          <span *ngIf="email.errors?.required">Email is required</span>
+          <span *ngIf="email.errors?.email">Email is invalid</span>
+        </div>
+
+        <!-- PASSWORD -->
+        <ion-item>
+          <ion-note slot="start">
+            <ion-icon name="key-outline"></ion-icon>
+          </ion-note>
+          <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+        </ion-item>
+
+        <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+          <span *ngIf="password.errors?.required">Password is required</span>
+          <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
+        </div>
+
+        <!-- CONFIRM PASSWORD -->
+        <ion-item>
+          <ion-note slot="start" style="margin-inline-start: 24px"></ion-note>
+
+          <ion-input type="password" placeholder="Confirm Password" formControlName="password_confirmation"></ion-input>
+        </ion-item>
+
+        <div *ngIf="(confirmPass.dirty || confirmPass.touched) && confirmPass.errors" class="errors">
+          <span *ngIf="confirmPass.errors?.required">Password is required</span>
+          <span *ngIf="confirmPass.errors?.matchPassword">Password needs to be 6 characters</span>
+        </div>
+      </div>
+
+
+
+      <ion-button type="submit" expand="block" [disabled]="form.invalid">Register</ion-button>
+      <ion-button type="button" expand="block" color="light" fill="clear" routerLink="/login">Already a member? Go to
+        Login Page!
+      </ion-button>
+    </form>
   </ion-content>
 </div>

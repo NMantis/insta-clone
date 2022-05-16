@@ -4,13 +4,15 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
     constructor(
         private toastController: ToastController,
-        private router: Router
+        private router: Router,
+        private auth: AuthService
     ) { }
 
     async presentToast(message: string, dur: number = 2500) {
@@ -36,7 +38,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                             } else {
                                 text = "Παρουσιάστηκε σφάλμα κατά την πιστοποίηση του χρήστη σας. Βεβαιωθείτε οτι είστε συνδεδεμένοι στο διαδίκτυο και κάντε ξανά είσοδο στο σύστημα."
                                 this.presentToast(text)
-                                this.router.navigate(['/auth/login']);
+                                this.auth.logout();
                             }
                             break;
                         case 403:
