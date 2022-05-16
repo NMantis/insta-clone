@@ -12,8 +12,8 @@ export class ProfileService {
     baseUrl = environment.baseUrl
     constructor(private http: HttpClient) { }
 
-    load(user_id: string): Observable<ProfileData> {
-        return this.http.get<ProfileData>(`${this.baseUrl}/api/profile/${user_id}`)
+    load(username: string): Observable<ProfileData> {
+        return this.http.get<ProfileData>(`${this.baseUrl}/api/profile/${username}`)
         .pipe(map(resp => new ProfileData(resp)))
     }
     

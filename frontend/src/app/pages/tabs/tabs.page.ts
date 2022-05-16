@@ -10,8 +10,8 @@ export class TabsPage {
 
   constructor(private auth: AuthService) {}
 
-  get userId(): string {
-    return this.auth.user?.id;
+  get username(): string {
+    return this.auth.user?.username;
   }
 
 }

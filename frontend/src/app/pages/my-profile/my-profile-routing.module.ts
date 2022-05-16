@@ -5,7 +5,7 @@ import { MyProfilePage } from './my-profile.page';
 
 const routes: Routes = [
   {
-    path: ':user_id',
+    path: ':username',
     component: MyProfilePage,
     resolve: { data: ProfileResolver }
   }

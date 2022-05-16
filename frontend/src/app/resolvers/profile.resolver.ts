@@ -10,8 +10,8 @@ export class ProfileResolver implements Resolve<any> {
     constructor(protected profileService: ProfileService) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | any {
-        const { user_id } = route.params;
+        const { username } = route.params;
 
-        return this.profileService.load(user_id);
+        return this.profileService.load(username);
     }
 }
