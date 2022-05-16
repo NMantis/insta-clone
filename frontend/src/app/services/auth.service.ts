@@ -24,10 +24,10 @@ export class AuthService {
     this.token$.subscribe((token) => localStorage.setItem("token", token));
   }
 
-  login(email: string, password: string): Observable<AutorizedResponse> {
+  login(username: string, password: string): Observable<AutorizedResponse> {
     return this.http
       .post<{ user; access_token }>(`${this.baseUrl}/api/login`, {
-        email,
+        username,
         password,
       })
       .pipe(

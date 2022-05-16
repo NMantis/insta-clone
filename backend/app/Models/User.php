@@ -39,14 +39,21 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Post');
     }
 
-    public function following() {
+    public function following()
+    {
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
     }
 
-    public function followers() {
+    public function followers()
+    {
         return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
     }
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+    
     /**
      * The attributes that should be cast to native types.
      *

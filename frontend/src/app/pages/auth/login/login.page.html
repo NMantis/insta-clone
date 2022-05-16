@@ -21,11 +21,10 @@
                         <ion-icon name="person-outline"></ion-icon>
                     </ion-note>
 
-                    <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+                    <ion-input type="text" placeholder="Username or email" formControlName="username"></ion-input>
                 </ion-item>
-                <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
-                    <span *ngIf="email.errors?.required">Email is required</span>
-                    <span *ngIf="email.errors?.email">Email is invalid</span>
+                <div *ngIf="(username.dirty || username.touched) && username.errors" class="errors">
+                    <span *ngIf="username.errors?.required">Username or email is required</span>
                 </div>
                 <ion-item>
                     <ion-note slot="start">

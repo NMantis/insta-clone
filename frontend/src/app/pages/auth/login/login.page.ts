@@ -19,20 +19,20 @@ export class LoginPage implements OnInit {
   // TODO: HANDLE HARDWARE BACK BUTTON
   ngOnInit() {
     this.loginForm = new FormGroup({
-      email: new FormControl("", [Validators.required, Validators.email]),
+      username: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required]),
       autologin: new FormControl(false)
     });
   }
 
   login() {
-    const { email, password } = this.loginForm.value
-    this.auth.login(email, password)
+    const { username, password } = this.loginForm.value
+    this.auth.login(username, password)
       .subscribe(resp => this.router.navigateByUrl(''))
   }
 
-  get email(): FormControl {
-    return this.loginForm.get('email') as FormControl;
+  get username(): FormControl {
+    return this.loginForm.get('username') as FormControl;
   }
 
   get password(): FormControl {

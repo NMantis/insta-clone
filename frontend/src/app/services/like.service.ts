@@ -17,9 +17,9 @@ export class LikeService {
       .pipe(map((resp) => resp.data));
   }
 
-  dislike(post_id: string): Observable<Post> {
+  unlike(post_id: string): Observable<Post> {
     return this.http
-      .delete<{ data: Post }>(`${env.baseUrl}/api/posts/${post_id}/dislike`)
+      .delete<{ data: Post }>(`${env.baseUrl}/api/posts/${post_id}/unlike`)
       .pipe(map((resp) => resp.data));
   }
 }

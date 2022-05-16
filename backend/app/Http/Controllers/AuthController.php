@@ -1,45 +1,38 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
- 
+
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:55',
-            'email' => 'email|required|unique:users',
-            'username' => 'required|max:30|unique:users',
-            'password' => 'required|between:8,255|confirmed'
-        ]);
- 
-        $validatedData['password'] = bcrypt($request->password);
- 
-        $user = User::create($validatedData);
- 
+        $user = User::create($request->validated());
+
         $accessToken = $user->createToken('authToken')->accessToken;
- 
+
         return response(['user' => $user, 'access_token' => $accessToken]);
     }
- 
-    public function login(Request $request)
+
+    public function login(LoginRequest $request)
     {
-        $loginData = $request->validate([
-            'email' => 'email|required',
-            'password' => 'required'
-        ]);
- 
-        if (!auth()->attempt($loginData)) {
+
+        $credentials = $request->getCredentials();
+
+
+        if (!auth()->validate($credentials)) {
             return response()->json(['message' => 'Invalid Credentials'], 401);
         }
- 
-        $accessToken = auth()->user()->createToken('authToken')->accessToken;
- 
-        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
- 
+
+        $user = auth()->getProvider()->retrieveByCredentials($credentials);
+        $accessToken = $user->createToken('authToken')->accessToken;
+
+        return response(['user' => $user, 'access_token' => $accessToken]);
     }
+
 }

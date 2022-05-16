@@ -30,7 +30,7 @@ export class PostComponent implements OnInit {
 
     let obs;
     if (this.post.liked_by_auth_user) {
-      obs = this.likeService.dislike(this.post.id);
+      obs = this.likeService.unlike(this.post.id);
     } else {
       obs = this.likeService.like(this.post.id);
     }

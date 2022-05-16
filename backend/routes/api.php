@@ -26,7 +26,7 @@ Route::get('/posts/{id}', [PostController::class, 'show'])->middleware('auth:api
 Route::get('/posts/profile', [PostController::class, 'profile'])->middleware('auth:api');
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth:api');
 Route::post('/posts/{post}/like', [PostLikeController::class, 'store'])->middleware('auth:api');
-Route::delete('/posts/{post}/dislike', [PostLikeController::class, 'destroy'])->middleware('auth:api');
+Route::delete('/posts/{post}/unlike', [PostLikeController::class, 'destroy'])->middleware('auth:api');
 Route::put('/posts/{id}', [PostController::class, 'update'])->middleware('auth:api');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('auth:api');
 
