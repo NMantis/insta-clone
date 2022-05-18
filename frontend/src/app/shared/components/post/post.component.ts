@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { Post } from "src/app/models/Post";
+import { AuthService } from "src/app/services/auth.service";
 import { LikeService } from "src/app/services/like.service";
 import { CommentModalComponent } from "./comment-modal/comment-modal.component";
 
@@ -18,21 +19,28 @@ export class PostComponent implements OnInit {
 
   constructor(
     private modal: ModalController,
-    private likeService: LikeService
-  ) {}
+    private likeService: LikeService,
+    private auth: AuthService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  update() {
+  like() {
+    this.likeService.like(this.post.id)
+      .subscribe(post => this.post = new Post(post));
+  }
 
-    let obs;
-    if (this.post.liked_by_auth_user) {
-      obs = this.likeService.unlike(this.post.id);
-    } else {
-      obs = this.likeService.like(this.post.id);
-    }
+  unlike() {
+    this.likeService.unlike(this.post.id)
+      .subscribe(() => {
+        this.post.liked_by_auth_user = false;
 
-    obs.subscribe(post => this.post = new Post(post));
+        const index = this.post
+          .post_likes
+          .findIndex(like => like.user_id == this.auth.user.id);
+
+        this.post.post_likes.splice(index, 1);
+      })
   }
 
   async showModal() {

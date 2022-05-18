@@ -24,8 +24,33 @@ class PostLikeFactory extends Factory
     public function definition()
     {
         return [
-           'user_id'=> User::factory(),
-           'post_id'=> Post::factory()
+            'user_id' => User::factory(),
+            'post_id' => Post::factory()
         ];
+    }
+
+
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (PostLike $like) {
+
+            $posts = Post::all();
+
+            foreach ($posts as $post) {
+                $likedBy = PostLike::where('post_id', $post->id)->pluck('user_id');
+
+                $users = User::whereNotIn('id', $likedBy)
+                    ->inRandomOrder()
+                    ->get()
+                    ->pluck('id');
+
+                $like->update(['user_id' => $users->random()]);
+            }
+        });
     }
 }

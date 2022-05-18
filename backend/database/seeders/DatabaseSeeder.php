@@ -32,20 +32,8 @@ class DatabaseSeeder extends Seeder
             ->has(
                 Post::factory()
                     ->count(3)
-                    ->hasComments(1, fn () => ['user_id' => User::all()->random()->id])
-                    ->hasPostLikes(rand(0, 23), function (array $attributes, $post) {
-
-
-                        $likedBy = PostLike::where('post_id', $post->id)->pluck('user_id');
-
-                        $users = User::whereNotIn('id', $likedBy)
-                            ->inRandomOrder()
-                            ->limit(30)
-                            ->get()
-                            ->pluck('id');
-
-                        return ['user_id' => $users->random()];
-                    })
+                    ->hasComments(3, fn () => ['user_id' => User::all()->random()->id])
+                    ->hasPostLikes(rand(0, 12))
             )
             ->create();
 

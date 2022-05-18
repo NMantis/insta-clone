@@ -18,12 +18,17 @@
   <ion-card-content>
 
     <div class="action-row">
-      <ion-button slot="icon-only" fill="clear" shape="round" (click)="update()">
-        <ion-icon name="heart-outline" *ngIf="!post.liked_by_auth_user"></ion-icon>
-        <ion-icon name="heart" color="danger" *ngIf="post.liked_by_auth_user"></ion-icon>
-
+      <ion-button slot="icon-only" fill="clear" shape="round" (click)="like()" *ngIf="!post.liked_by_auth_user">
+        <ion-icon name="heart-outline"></ion-icon>
         <!-- <ion-icon name="heart" color="primary"></ion-icon> -->
       </ion-button>
+
+
+      <ion-button slot="icon-only" fill="clear" shape="round" (click)="unlike()" *ngIf="post.liked_by_auth_user">
+
+        <ion-icon name="heart" color="danger"></ion-icon>
+      </ion-button>
+
 
       <ion-button slot="icon-only" fill="clear" shape="round" (click)="showModal()">
         <ion-icon name="chatbubble-outline"></ion-icon>
