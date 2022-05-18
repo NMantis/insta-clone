@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\CurrentUserController;
+// use App\Http\Controllers\FollowRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,16 @@ Route::delete('/posts/{post_id}/comments/{comment_id}', [CommentController::clas
 // AUTH
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// FOLLOW REQUESTS 
+// Route::post('/follow/{user}', [FollowRequestController::class, 'store'])->middleware('auth:api');
+// Route::put('/follow/{follow_request}/update', [FollowRequestController::class, 'accept'])->middleware('auth:api');
+// Route::get('/follow/pending', [FollowRequestController::class, 'index'])->middleware('auth:api');
+// Route::delete('/follow/{follow_request}/delete', [FollowRequestController::class, 'destroy'])->middleware('auth:api');
+
+// FRIENDSHIPS
+// Route::put('/user/reccomendations', [FollowRequestController::class, 'reject'])->middleware('auth:api');
+
 
 // PROFILE
 Route::get('/profile/{user:username}', ProfileController::class)->middleware('auth:api');

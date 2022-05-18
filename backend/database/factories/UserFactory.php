@@ -34,6 +34,7 @@ class UserFactory extends Factory
             'username' => $this->faker->unique()->userName,
             'email' =>  $this->faker->unique()->safeEmail,
             'password' => bcrypt('password'),
+            'image' => $this->faker->imageUrl(360, 360, 'animals', true, 'cats'),
             'email_verified_at' => now()
         ];
     }

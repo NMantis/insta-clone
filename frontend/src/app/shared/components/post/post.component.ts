@@ -25,17 +25,12 @@ export class PostComponent implements OnInit {
 
   update() {
 
-    let temp = this.post.liked_by_auth_user;
-
-
     let obs;
     if (this.post.liked_by_auth_user) {
       obs = this.likeService.unlike(this.post.id);
     } else {
       obs = this.likeService.like(this.post.id);
     }
-    
-    this.post.liked_by_auth_user = !temp;
 
     obs.subscribe(post => this.post = new Post(post));
   }

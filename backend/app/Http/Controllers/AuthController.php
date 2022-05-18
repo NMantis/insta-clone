@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function register(RegisterRequest $request)
@@ -24,15 +23,27 @@ class AuthController extends Controller
 
         $credentials = $request->getCredentials();
 
+        $user = Auth::getProvider()->retrieveByCredentials($credentials);
 
-        if (!auth()->validate($credentials)) {
+        if (! $user) {
             return response()->json(['message' => 'Invalid Credentials'], 401);
         }
 
-        $user = auth()->getProvider()->retrieveByCredentials($credentials);
         $accessToken = $user->createToken('authToken')->accessToken;
 
         return response(['user' => $user, 'access_token' => $accessToken]);
     }
 
 }
+
+
+
+// $user = User::where([
+//     'username' => $credentials['username'],
+//     'email' => $credentials['email']
+// ])->first();
+
+// $authenticated = Hash::check($credentials['password'], $user->password ?? '');
+
+// abort_unless($authenticated, 401, 'unauthorized');
+
