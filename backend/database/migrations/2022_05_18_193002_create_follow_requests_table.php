@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('follow_requests', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', FollowRequest::ALL_STATUSES);
+            $table->enum('status', FollowRequest::ALL_STATUSES)->default(FollowRequest::PENDING);
             $table->foreignId('sender_id');
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('recipient_id');

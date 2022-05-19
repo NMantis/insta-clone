@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\Models\PostLike;
 use App\Models\CommentLike;
+use App\Models\FollowRequest;
 
 class DatabaseSeeder extends Seeder
 {
@@ -38,5 +39,10 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         User::find(1)->update(['email' => 'user1@example.com']);
+
+        FollowRequest::select()
+            ->inRandomOrder()
+            ->limit(200)
+            ->update(['status' => FollowRequest::ACCEPTED]);
     }
 }

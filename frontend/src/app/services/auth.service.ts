@@ -58,7 +58,7 @@ export class AuthService {
 
   logout(): void {
     this.token$.next(null);
-    this.router.navigate(["/", "auth", "login"]);
+    this.router.navigate(["/", "auth", "login"], { replaceUrl: true });
   }
 
   setUser(user: User) {

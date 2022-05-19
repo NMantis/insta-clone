@@ -7,7 +7,7 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
-    public function __invoke(User $user)
+    public function show(User $user)
     {
 
         $posts = $user->posts()->count();
@@ -22,5 +22,21 @@ class ProfileController extends Controller
             'followers' => $followers,
             'following' => $following
         ]);
+    }
+
+    public function followers()
+    {
+        $user = User::findOrFail(auth()->id());
+
+
+        return response()->json(['data' => $user->followers]);
+    }
+
+    public function following()
+    {
+        $user = User::findOrFail(auth()->id());
+
+
+        return response()->json(['data' => $user->following]);
     }
 }

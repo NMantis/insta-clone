@@ -42,12 +42,14 @@ class User extends Authenticatable
 
     public function following()
     {
-        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+        return $this->belongsToMany(User::class, 'follow_requests', 'sender_id', 'recipient_id')
+            ->wherePivot('status', '=', FollowRequest::ACCEPTED);
     }
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'follow_requests', 'recipient_id', 'sender_id')
+            ->wherePivot('status', '=', FollowRequest::ACCEPTED);
     }
 
     public function setPasswordAttribute($value)

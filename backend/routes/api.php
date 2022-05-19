@@ -21,38 +21,47 @@ use App\Http\Controllers\FollowRequestController;
 |
 */
 
-// POSTS
-Route::get('/posts', [PostController::class, 'index'])->middleware('auth:api');
-Route::get('/posts/{id}', [PostController::class, 'show'])->middleware('auth:api');
-Route::get('/posts/profile', [PostController::class, 'profile'])->middleware('auth:api');
-Route::post('/posts', [PostController::class, 'store'])->middleware('auth:api');
-Route::post('/posts/{post}/like', [PostLikeController::class, 'store'])->middleware('auth:api');
-Route::delete('/posts/{post}/unlike', [PostLikeController::class, 'destroy'])->middleware('auth:api');
-Route::put('/posts/{id}', [PostController::class, 'update'])->middleware('auth:api');
-Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('auth:api');
-
-// COMMENTS
-Route::get('/posts/{post_id}/comments', [CommentController::class, 'index'])->middleware('auth:api');
-Route::post('/posts/{post_id}/comments', [CommentController::class, 'store'])->middleware('auth:api');
-Route::put('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'update'])->middleware('auth:api');
-Route::delete('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'destroy'])->middleware('auth:api');
 
 // AUTH
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// FOLLOW REQUESTS 
-Route::get('/follow-requests/pending', [FollowRequestController::class, 'index'])->middleware('auth:api');
-Route::post('/follow-requests/{user}', [FollowRequestController::class, 'store'])->middleware('auth:api');
-Route::put('/follow-requests/{follow_request}', [FollowRequestController::class, 'update'])->middleware('auth:api');
-// Route::delete('/follow-requests/{follow_request}', [FollowRequestController::class, 'destroy'])->middleware('auth:api');
+Route::middleware('auth:api')->group(function () {
+    // POSTS
+    Route::get('/posts', [PostController::class, 'index']);
+    Route::get('/posts/{id}', [PostController::class, 'show']);
+    Route::get('/posts/profile', [PostController::class, 'profile']);
+    Route::post('/posts', [PostController::class, 'store']);
+    Route::post('/posts/{post}/like', [PostLikeController::class, 'store']);
+    Route::delete('/posts/{post}/unlike', [PostLikeController::class, 'destroy']);
+    Route::put('/posts/{id}', [PostController::class, 'update']);
+    Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 
-// FRIENDSHIPS
-// Route::put('/user/reccomendations', [FollowRequestController::class, 'reject'])->middleware('auth:api');
+    // COMMENTS
+    Route::get('/posts/{post_id}/comments', [CommentController::class, 'index']);
+    Route::post('/posts/{post_id}/comments', [CommentController::class, 'store']);
+    Route::put('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'update']);
+    Route::delete('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'destroy']);
+
+    // FOLLOW REQUESTS 
+    Route::get('/follow-requests/pending', [FollowRequestController::class, 'index']);
+    Route::post('/follow-requests/{user}', [FollowRequestController::class, 'store']);
+    Route::put('/follow-requests/{follow_request}', [FollowRequestController::class, 'update']);
+    Route::delete('/follow-requests/{follow_request}', [FollowRequestController::class, 'destroy']);
 
 
-// PROFILE
-Route::get('/profile/{user:username}', ProfileController::class)->middleware('auth:api');
 
-// CURRENT USER
-Route::get('/current', CurrentUserController::class)->middleware('auth:api');
+    // PROFILE
+    Route::get('/profile/followers', [ProfileController::class, 'followers']);
+    Route::get('/profile/following', [ProfileController::class, 'following']);
+    Route::get('/profile/{user:username}', [ProfileController::class, 'show']);
+
+
+
+    // CURRENT USER
+    Route::get('/current', CurrentUserController::class);
+
+    // FRIENDSHIPS
+    // Route::put('/user/reccomendations', [FollowRequestController::class, 'reject']);
+
+});

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil, tap, switchMap, finalize, startWith } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { PostService } from 'src/app/services/post.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   @ViewChild(IonInfiniteScroll)
   infiniteScroll: IonInfiniteScroll;
 
@@ -24,9 +24,7 @@ export class HomePage {
 
   constructor(private postService: PostService) { }
 
-
-  ionViewDidEnter(): void {
-console.log('i;m in')
+  ngOnInit(): void {
     this.filters$.pipe(
       startWith(this.filters$.value),
       takeUntil(this.destroyed$),
