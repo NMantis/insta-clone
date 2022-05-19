@@ -29,12 +29,7 @@ class Post extends Model
 
     public function getLikedByAuthUserAttribute()
     {
-
-        $like = $this->postLikes->firstWhere('user_id', auth()->user()->id);
-
-        $isLiked = $like ? true : false;
-
-        return $isLiked;
+        return $this->postLikes()->Where('user_id', auth()->user()->id)->exists();
     }
 
     public function scopeFull($builder)

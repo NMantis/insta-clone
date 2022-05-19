@@ -52,6 +52,11 @@ class User extends Authenticatable
             ->wherePivot('status', '=', FollowRequest::ACCEPTED);
     }
 
+    public function getFollowedByAuthAttribute()
+    {
+        return  $this->following()->where('recipient_id', auth()->id())->exists();
+    }
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);

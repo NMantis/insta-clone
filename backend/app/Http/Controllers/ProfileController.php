@@ -28,8 +28,10 @@ class ProfileController extends Controller
     {
         $user = User::findOrFail(auth()->id());
 
+        $followers = $user->followers
+            ->each(fn ($follower) => $follower->append('followed_by_auth'));
 
-        return response()->json(['data' => $user->followers]);
+        return response()->json(['data' => $followers]);
     }
 
     public function following()
