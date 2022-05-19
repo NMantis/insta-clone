@@ -3,6 +3,7 @@ import { ModalController } from "@ionic/angular";
 import { Post } from "src/app/models/Post";
 import { AuthService } from "src/app/services/auth.service";
 import { LikeService } from "src/app/services/like.service";
+import { LoaderService } from "src/app/services/loader.service";
 import { CommentModalComponent } from "./comment-modal/comment-modal.component";
 
 @Component({
@@ -20,17 +21,22 @@ export class PostComponent implements OnInit {
   constructor(
     private modal: ModalController,
     private likeService: LikeService,
-    private auth: AuthService
+    private auth: AuthService,
+    private loader: LoaderService
   ) { }
 
   ngOnInit() { }
 
   like() {
+    if(this.loader.state.value) return;
+    
     this.likeService.like(this.post.id)
       .subscribe(post => this.post = new Post(post));
   }
 
   unlike() {
+    if(this.loader.state.value) return;
+
     this.likeService.unlike(this.post.id)
       .subscribe(() => {
         this.post.liked_by_auth_user = false;

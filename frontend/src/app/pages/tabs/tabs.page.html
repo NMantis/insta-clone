@@ -1,4 +1,6 @@
 <div class="main-wrapper">
+
+  <ion-progress-bar color="tertiary" *ngIf="loading$ | async" type="indeterminate"></ion-progress-bar>
   <ion-tabs>
 
     <ion-tab-bar slot="bottom">

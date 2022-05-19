@@ -7,3 +7,9 @@ ion-button {
 ion-tabs {
     position:absolute;
 }
+
+ion-progress-bar {
+    position: absolute;
+    bottom: 56px;
+    z-index: 999;
+}

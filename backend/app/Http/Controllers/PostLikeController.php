@@ -21,11 +21,14 @@ class PostLikeController extends Controller
 
         // check if like exists;
         $like = PostLike::where([
-            'post_id' => $request->post,
+            'post_id' => $post->id,
             'user_id' => auth()->id()
-        ]);
+        ])->first();
 
-        abort_unless($like, 'Already liked', 400);
+
+        if($like) {
+            return response()->json(['message' => 'Already Liked'], 400);
+        }
         
         $post->postLikes()
             ->create([
