@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
                 Post::factory()
                     ->count(3)
                     ->hasComments(3, fn () => ['user_id' => User::all()->random()->id])
-                    ->hasPostLikes(rand(0, 12))
+                    ->hasPostLikes(1, fn () => ['user_id' => User::all()->random()->id])
             )
             ->create();
 

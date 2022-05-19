@@ -25,7 +25,8 @@ class PostLikeFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'post_id' => Post::factory()
+            'post_id' => Post::factory(),
+            'created_at' => now()
         ];
     }
 
@@ -35,22 +36,22 @@ class PostLikeFactory extends Factory
      *
      * @return $this
      */
-    public function configure()
-    {
-        return $this->afterCreating(function (PostLike $like) {
+    // public function configure()
+    // {
+    //     return $this->afterCreating(function (PostLike $like) {
 
-            $posts = Post::all();
+    //         $posts = Post::all();
 
-            foreach ($posts as $post) {
-                $likedBy = PostLike::where('post_id', $post->id)->pluck('user_id');
+    //         foreach ($posts as $post) {
+    //             $likedBy = PostLike::where('post_id', $post->id)->pluck('user_id');
 
-                $users = User::whereNotIn('id', $likedBy)
-                    ->inRandomOrder()
-                    ->get()
-                    ->pluck('id');
+    //             $users = User::whereNotIn('id', $likedBy)
+    //                 ->inRandomOrder()
+    //                 ->get()
+    //                 ->pluck('id');
 
-                $like->update(['user_id' => $users->random()]);
-            }
-        });
-    }
+    //             $like->update(['user_id' => $users->random()]);
+    //         }
+    //     });
+    // }
 }

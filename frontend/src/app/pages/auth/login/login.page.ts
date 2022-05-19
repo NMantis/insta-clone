@@ -28,7 +28,9 @@ export class LoginPage implements OnInit {
   login() {
     const { username, password } = this.loginForm.value
     this.auth.login(username, password)
-      .subscribe(resp => this.router.navigateByUrl(''))
+      .subscribe(resp => this.router.navigateByUrl('', {
+        replaceUrl: false
+      }));
   }
 
   get username(): FormControl {

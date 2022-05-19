@@ -22,7 +22,7 @@ export class RegisterPage implements OnInit {
     private auth: AuthService,
     private router: Router,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.form = this.fb.group(
@@ -42,7 +42,9 @@ export class RegisterPage implements OnInit {
   register() {
     const user = { ...this.form.value };
 
-    this.auth.register(user).subscribe(() => this.router.navigateByUrl(""));
+    this.auth.register(user).subscribe(resp => this.router.navigateByUrl('', {
+      replaceUrl: false
+    }));
   }
 
   get email(): FormControl {

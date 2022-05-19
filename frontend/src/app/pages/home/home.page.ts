@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil, tap, switchMap, finalize } from 'rxjs/operators';
+import { takeUntil, tap, switchMap, finalize, startWith } from 'rxjs/operators';
 import { Filters } from 'src/app/models/Filters';
 import { Paginated } from 'src/app/models/Paginated';
 import { Post } from 'src/app/models/Post';
@@ -22,14 +22,13 @@ export class HomePage {
   private filters$ = new BehaviorSubject(new Filters());
   private destroyed$ = new Subject<boolean>();
 
-  constructor(
-    private postService: PostService
-  ) { }
+  constructor(private postService: PostService) { }
 
 
-  ionViewWillEnter(): void {
-
+  ionViewDidEnter(): void {
+console.log('i;m in')
     this.filters$.pipe(
+      startWith(this.filters$.value),
       takeUntil(this.destroyed$),
       tap(() => this.loading = true),
       switchMap(filters =>

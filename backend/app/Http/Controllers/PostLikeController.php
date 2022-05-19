@@ -19,9 +19,17 @@ class PostLikeController extends Controller
     public function store(Request $request, Post $post)
     {
 
+        // check if like exists;
+        $like = PostLike::where([
+            'post_id' => $request->post,
+            'user_id' => auth()->id()
+        ]);
+
+        abort_unless($like, 'Already liked', 400);
+        
         $post->postLikes()
             ->create([
-                'user_id' => auth()->user()->id
+                'user_id' => auth()->id()
             ]);
 
         return response()->json([
@@ -32,12 +40,10 @@ class PostLikeController extends Controller
 
     public function destroy(Request $request)
     {
-        $postLike = PostLike::where([
-            ['post_id', $request->post],
-            ['user_id', auth()->user()->id]
-        ]);
-
-        $postLike->delete();
+        PostLike::where([
+            'post_id' => $request->post,
+            'user_id' => auth()->id()
+        ])->delete();
 
         return response()->json(['message' => 'ok']);
     }

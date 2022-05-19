@@ -23,11 +23,12 @@ class AuthController extends Controller
 
         $credentials = $request->getCredentials();
 
-        $user = Auth::getProvider()->retrieveByCredentials($credentials);
 
-        if (! $user) {
+        if (! Auth::attempt($credentials)) {
             return response()->json(['message' => 'Invalid Credentials'], 401);
         }
+
+        $user = Auth::getProvider()->retrieveByCredentials($credentials);
 
         $accessToken = $user->createToken('authToken')->accessToken;
 
@@ -35,15 +36,3 @@ class AuthController extends Controller
     }
 
 }
-
-
-
-// $user = User::where([
-//     'username' => $credentials['username'],
-//     'email' => $credentials['email']
-// ])->first();
-
-// $authenticated = Hash::check($credentials['password'], $user->password ?? '');
-
-// abort_unless($authenticated, 401, 'unauthorized');
-
