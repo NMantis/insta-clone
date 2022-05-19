@@ -1,0 +1,91 @@
+
+<ion-content class="ion-padding">
+
+<div class="header">
+
+  <!-- AVATAR -->
+  <div class="avatar-wrapper">
+    <img [src]="profileData?.user.image">
+  </div>
+
+  <div class="info-col">
+
+    <div class="info">
+      <ion-label class="ion-text-center clickable">
+        <h2>{{ profileData?.posts }}</h2>
+        <h5>posts</h5>
+      </ion-label>
+
+      <ion-label class="ion-text-center clickable" (click)="presentModal('followers')">
+        <h2>{{ profileData?.followers }}</h2>
+        <h5>followers</h5>
+      </ion-label>
+
+      <ion-label class="ion-text-center clickable" (click)="presentModal('followers')">
+        <h2>{{ profileData?.following }}</h2>
+        <h5>following</h5>
+      </ion-label>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <ion-button fill="outline" size="small" color="primary" expand="block">
+        Edit your profile
+      </ion-button>
+
+      <!-- <ion-button size="small" color="primary">
+        Follow
+      </ion-button>
+
+      <ion-button fill="outline" size="small">
+        Message
+      </ion-button> -->
+    </div>
+
+  </div>
+</div>
+
+<!-- Profile info -->
+<ion-item lines="none" style="max-width: 300px">
+  <ion-label position="floating">
+    <b>{{ profileData?.user.name }}</b>
+  </ion-label>
+  <p style="font-size: 14px">Software developer, open-source lover, invoker spammer & heavy metal guitarist</p>
+</ion-item>
+
+<!-- Segments -->
+<div>
+  <ion-segment [(ngModel)]="profile_segment">
+    <ion-segment-button value="grid">
+      <ion-icon name="apps"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="list">
+      <ion-icon name="list"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="saved">
+      <ion-icon name="bookmark"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+<ion-list>
+  <ion-grid *ngIf="posts.length" class="ion-no-padding">
+    <ion-row class="ion-no-padding">
+      <ion-col size="4" *ngFor="let post of posts" class="ion-no-padding">
+        <img [src]="baseUrl + post.image" alt="">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-list>
+
+<div *ngIf="! posts.length">
+  No posts to show
+</div>
+
+<ion-infinite-scroll (ionInfinite)="load()">
+  <ion-infinite-scroll-content loadingText="Loading Posts.."></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+
+  
+</ion-content>

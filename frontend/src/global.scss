@@ -33,6 +33,10 @@
     height: 100vh;
 }
 
+.follower-modal .modal-wrapper {
+    max-width: 400px;
+}
+
 .comment-modal {
     --height: 100vh;
     --max-height: 900px;

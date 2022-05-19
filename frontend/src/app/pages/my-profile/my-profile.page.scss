@@ -2,6 +2,27 @@ ion-label h2 {
   font-weight: bold !important;
 }
 
+.side-menu{
+  --background: var(--ion-color-light);
+  background: var(--ion-color-light);
+
+  ion-list, ion-item {
+    --background: var(--ion-color-light);
+    background: var(--ion-color-light);
+  }
+}
+
+.clickable {
+  padding: 8px;
+  border-radius: 42%;
+  cursor: pointer;
+}
+
+.clickable:active {
+  background: var(--ion-color-light);
+
+}
+
 .header {
   margin: 12px;
   display: flex;
