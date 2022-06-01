@@ -13,7 +13,7 @@ class UpdateFollowRequestRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdateFollowRequestRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'recipient_id' => 'required|exists:users,id'
         ];
     }
 }

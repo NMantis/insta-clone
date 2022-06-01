@@ -14,7 +14,7 @@ export class FollowerModalComponent implements OnInit {
 
   @Input()
   title: string;
-  
+
   constructor(private modal: ModalController) { }
 
   ngOnInit() { }
@@ -24,4 +24,12 @@ export class FollowerModalComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
+
+  remove() {
+
+  }
+
+  follow() {
+
+  }
 }

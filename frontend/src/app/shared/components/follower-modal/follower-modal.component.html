@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-toolbar color="tertiary">
     <ion-title>{{ title | titlecase }}</ion-title>
@@ -14,20 +13,29 @@
 <ion-content>
   <ion-list lines="none">
     <ion-item detail="false" *ngFor="let user of users">
-      
-   
 
-        <ion-avatar slot="start">
-          <img [src]="user.image" default="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-        </ion-avatar>
+
+      <ion-avatar slot="start">
+        <img [src]="user.image" default="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      </ion-avatar>
 
       <ion-label>
         <b>{{ user.username }}</b>
         <p>{{ user.name }}</p>
       </ion-label>
 
-      <ion-button slot="end">
+
+      <ion-button slot="end" color="light" (click)="remove()" *ngIf="user.followed_by_auth">
+        Remove
+      </ion-button>
+
+      <ion-button slot="end" color="primary" (click)="follow()" *ngIf="!user.followed_by_auth && title == 'followers'">
         Follow
+      </ion-button>
+
+
+      <ion-button slot="end" color="light" (click)="remove()" *ngIf="!user.followed_by_auth && title == 'following'">
+        Following
       </ion-button>
     </ion-item>
   </ion-list>
