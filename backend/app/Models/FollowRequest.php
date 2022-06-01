@@ -52,4 +52,15 @@ class FollowRequest extends Model
         'recipient_id',
         'status'
     ];
+
+
+    public function sender()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function recipient()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

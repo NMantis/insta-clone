@@ -19,6 +19,10 @@ class FollowRequestController extends Controller
             'recipient_id' => auth()->id(),
             'status' => FollowRequest::PENDING
         ])
+            ->with([
+                'sender',
+                'recipient'
+            ])
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

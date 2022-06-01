@@ -1,0 +1,47 @@
+<ion-header #header>
+  <ion-toolbar color="tertiary">
+    <ion-title>Activity</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" scrollEvents="true" [appHideHeader]="header">
+
+  <ion-list lines="none">
+
+    <!-- <ion-list-header>
+      Follow Requests
+    </ion-list-header>
+   -->
+    <ion-item detail="false" *ngFor="let req of fRequests">
+
+      <ion-avatar slot="start">
+        <img [src]="req.sender.image" default="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      </ion-avatar>
+
+      <ion-label>
+        <span class="username">{{ req.sender.username }}</span> has requested to follow you.
+      </ion-label>
+
+
+      <ion-button slot="end" color="primary">
+        Accept
+      </ion-button>
+<!-- 
+      <ion-button slot="end" color="primary">
+        Follow
+      </ion-button>
+
+      <ion-button slot="end" color="light">
+        Following
+      </ion-button> -->
+
+    </ion-item>
+  
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="load()">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading..">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
