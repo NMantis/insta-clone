@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\FollowRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+
 
 class UpdateFollowRequestRequest extends FormRequest
 {
@@ -23,8 +26,10 @@ class UpdateFollowRequestRequest extends FormRequest
      */
     public function rules()
     {
+        $all = FollowRequest::ALL_STATUSES;
+
         return [
-            'recipient_id' => 'required|exists:users,id'
+            'status' => ['required|', Rule::in($all)]
         ];
     }
 }

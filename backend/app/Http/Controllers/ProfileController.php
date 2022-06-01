@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
@@ -30,6 +30,12 @@ class ProfileController extends Controller
 
         $followers = $user->followers
             ->each(fn ($follower) => $follower->append('followed_by_auth'));
+
+        // $data = DB::table('follow_requests')
+        //     ->whereIn('sender_id', $followers->pluck('id'))
+        //     ->where('recipient_id', $user->id)
+        //     ->get();
+
 
         return response()->json(['data' => $followers]);
     }

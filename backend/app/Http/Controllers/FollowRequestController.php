@@ -15,7 +15,14 @@ class FollowRequestController extends Controller
      */
     public function index()
     {
-        //
+        $requests = FollowRequest::where([
+            'recipient_id' => auth()->id(),
+            'status' => FollowRequest::PENDING
+        ])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return response()->json($requests);
     }
 
     /**
@@ -26,7 +33,23 @@ class FollowRequestController extends Controller
      */
     public function store(StoreFollowRequestRequest $request)
     {
-        //
+        $userId = $request->recipient_id;
+
+        $duplicate = FollowRequest::firstWhere('recipient_id', $userId);
+
+        abort_unless($duplicate, 'Already Exists!', 400);
+
+
+        // check if profile is private. If not change status
+
+        FollowRequest::create([
+            'recipient_id' => $userId,
+            'sender_id' => auth()->id()
+        ]);
+
+        // trigger event 
+
+        return response()->json(['message' => 'Ok']);
     }
 
     /**
@@ -49,6 +72,26 @@ class FollowRequestController extends Controller
      */
     public function update(UpdateFollowRequestRequest $request, FollowRequest $followRequest)
     {
-        //
+        // $isValid = in_array(FollowRequest::ALL_STATUSES, $request->status);
+
+        // abort_unless($isValid, 'Invalid Status', 400);
+
+
+        $followRequest->update([
+            'status' => $request->status
+        ]);
+
+
+        // trigger event 
+
+        return response()->json(['message' => 'Ok']);
+    }
+
+
+    public function destroy(FollowRequest $followRequest)
+    {
+        $followRequest->delete();
+
+        return response()->json(['message' => 'ok']);
     }
 }

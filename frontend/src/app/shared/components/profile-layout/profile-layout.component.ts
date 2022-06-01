@@ -1,10 +1,9 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { IonInfiniteScroll, ModalController } from "@ionic/angular";
 import { BehaviorSubject, Subject } from "rxjs";
-import { first, tap, auditTime, takeUntil, switchMap, finalize } from "rxjs/operators";
+import { tap, auditTime, takeUntil, switchMap, finalize } from "rxjs/operators";
 import { Filters } from "src/app/models/Filters";
 import { Paginated } from "src/app/models/Paginated";
-import { Post } from "src/app/models/Post";
 import { ProfileData } from "src/app/models/ProfileData";
 import { AuthService } from "src/app/services/auth.service";
 import { PostService } from "src/app/services/post.service";
