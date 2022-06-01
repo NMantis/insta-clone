@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { User } from 'src/app/models/User';
+import { FollowReuqestService } from 'src/app/services/follow-request.service';
 
 @Component({
   selector: 'app-follower-modal',
@@ -15,7 +16,10 @@ export class FollowerModalComponent implements OnInit {
   @Input()
   title: string;
 
-  constructor(private modal: ModalController) { }
+  constructor(
+    private modal: ModalController,
+    private followRequestService: FollowReuqestService
+  ) { }
 
   ngOnInit() { }
 
@@ -25,11 +29,11 @@ export class FollowerModalComponent implements OnInit {
   }
 
 
-  remove() {
-
+  remove(user: User) {
+    // this.followRequestService.unfollow().subscribe();
   }
 
-  follow() {
-
+  follow(user: User) {
+    // this.followRequestService.follow().subscribe();
   }
 }

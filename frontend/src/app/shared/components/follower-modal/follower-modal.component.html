@@ -25,16 +25,16 @@
       </ion-label>
 
 
-      <ion-button slot="end" color="light" (click)="remove()" *ngIf="user.followed_by_auth">
+      <ion-button slot="end" color="light" (click)="remove(user)" *ngIf="user.followed_by_auth">
         Remove
       </ion-button>
 
-      <ion-button slot="end" color="primary" (click)="follow()" *ngIf="!user.followed_by_auth && title == 'followers'">
+      <ion-button slot="end" color="primary" (click)="follow(user)" *ngIf="!user.followed_by_auth && title == 'followers'">
         Follow
       </ion-button>
 
 
-      <ion-button slot="end" color="light" (click)="remove()" *ngIf="!user.followed_by_auth && title == 'following'">
+      <ion-button slot="end" color="light" (click)="remove(user)" *ngIf="!user.followed_by_auth && title == 'following'">
         Following
       </ion-button>
     </ion-item>

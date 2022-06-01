@@ -62,6 +62,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/current', CurrentUserController::class);
 
     // FRIENDSHIPS
-    // Route::put('/user/reccomendations', [FollowRequestController::class, 'reject']);
+    // Route::put('/user/reccomendations', [FollowRequestController::class, 'index']);
 
 });

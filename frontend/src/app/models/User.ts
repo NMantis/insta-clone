@@ -7,7 +7,7 @@ export class User {
     username: string;
     bio: string;
     website: string;
-    
+    followed_by_auth: boolean;
 
     constructor(data?: User) {
         Object.assign(this, data);

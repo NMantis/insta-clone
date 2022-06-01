@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FollowReqStatus } from '../models/FollowRequest';
 
 @Injectable({
     providedIn: 'root'
@@ -16,11 +17,11 @@ export class FollowReuqestService {
     //     return this.http.get<Paginated<Comment>>(`${this.baseUrl}/api/posts/${post_id}/comments`, { params })
     // }
     
-    follow(): Observable<any> {
-        return this.http.post<any>(`${this.baseUrl}/api/`, { });
+    follow(fr_id: string): Observable<any> {
+        return this.http.post<any>(`${this.baseUrl}/api/follow-requests`, {});
     }
 
-    unfollow(): Observable<void> {
-        return this.http.put<void>(`${this.baseUrl}/api/`, { });
+    unfollow(fr_id: string): Observable<void> {
+        return this.http.put<void>(`${this.baseUrl}/api/follow-requests/${fr_id}`, { status: FollowReqStatus.REJECTED });
     }
 }
